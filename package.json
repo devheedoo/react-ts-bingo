@@ -1,0 +1,35 @@
+{
+  "name": "react-ts-bingo",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/devheedoo/react-ts-bingo.git",
+  "author": "Heedo Kim <devheedoo@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "webpack-dev-server",
+    "build": "webpack -w"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.7.5",
+    "@babel/core": "^7.7.5",
+    "@babel/plugin-proposal-class-properties": "^7.7.4",
+    "@babel/preset-env": "^7.7.6",
+    "@babel/preset-react": "^7.7.4",
+    "@babel/preset-typescript": "^7.7.4",
+    "@types/react": "^16.9.16",
+    "@types/react-dom": "^16.9.4",
+    "@types/webpack-env": "^1.14.1",
+    "babel-loader": "^8.0.6",
+    "html-webpack-plugin": "^3.2.0",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "source-map-loader": "^0.2.4",
+    "typescript": "^3.7.3",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.9.0"
+  },
+  "dependencies": {
+    "@babel/polyfill": "^7.7.0"
+  }
+}
