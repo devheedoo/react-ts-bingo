@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import BingoData from '../BingoData';
 import BingoLines from '../BingoLines';
+import posed from 'react-pose';
 
 const App = () => {
   const [bingo, setBingo] = useState({
@@ -10,6 +11,7 @@ const App = () => {
     bingoLines: BingoLines,
     bingoCount: 0,
   });
+  const [history, setHistory] = useState([]);
 
   const handleClickRouletteButton = () => {
     const randomBingoItemId: number = getRandomIncompleteBingoItemId(bingo.bingoData);
@@ -38,9 +40,13 @@ const App = () => {
     <div>
       <h1>MEMORY</h1>
       <div style={{ display: 'flex' }}>
+        <Mission />
+      </div>
+      <div style={{ display: 'flex', position: 'relative', }}>
         <Bingo
           bingoData={bingo.bingoData}
         />
+        <GoldenBell />
         <div style={{ width: '300px', height: '550px', backgroundColor: 'lightgray' }}>
           <BingoStatus
             bingoCount={bingo.bingoCount}
@@ -53,6 +59,116 @@ const App = () => {
     </div>
   );
 };
+
+const Mission = () => {
+  const [hovering, setHovering] = useState('idle');
+  return (
+    <div style={{
+      width: '1100px',
+      height: '50px',
+      backgroundColor: '#EEEEEE',
+      display: 'flex',
+      justifyContent: 'center',
+      // alignItems: 'center',
+      overflow: 'hidden',
+      position: 'relative',
+    }}>
+      <MissionList
+        pose={hovering}
+        style={{
+          position: 'absolute',
+          top: 0
+        }}
+      >
+        <ul>
+          <li>Mission1</li>
+          <li>Mission2</li>
+          <li>Mission3</li>
+          <li>Mission4</li>
+          <li>Mission5</li>
+          <li>Mission6</li>
+          <li>Mission7</li>
+          <li>Mission8</li>
+          <li>Mission9</li>
+          <li>Mission1</li>
+          <li>Mission2</li>
+          <li>Mission3</li>
+          <li>Mission4</li>
+          <li>Mission5</li>
+          <li>Mission6</li>
+          <li>Mission7</li>
+          <li>Mission8</li>
+          <li>Mission9</li>
+          <li>Mission1</li>
+          <li>Mission2</li>
+          <li>Mission3</li>
+          <li>Mission4</li>
+          <li>Mission5</li>
+          <li>Mission6</li>
+          <li>Mission7</li>
+          <li>Mission8</li>
+          <li>Mission9</li>
+          <li>Mission1</li>
+          <li>Mission2</li>
+          <li>Mission3</li>
+          <li>Mission4</li>
+          <li>Mission5</li>
+          <li>Mission6</li>
+          <li>Mission7</li>
+          <li>Mission8</li>
+          <li>Mission9</li>
+          <li>Mission1</li>
+          <li>Mission2</li>
+          <li>Mission3</li>
+          <li>Mission4</li>
+          <li>Mission5</li>
+          <li>Mission6</li>
+          <li>Mission7</li>
+          <li>Mission8</li>
+          <li>Mission9</li>
+          <li>Mission1</li>
+          <li>Mission2</li>
+          <li>Mission3</li>
+          <li>Mission4</li>
+          <li>Mission5</li>
+          <li>Mission6</li>
+          <li>Mission7</li>
+          <li>Mission8</li>
+          <li>Mission9</li>
+        </ul>
+      </MissionList>
+      <div style={{
+        position: 'absolute',
+        top: 17,
+        width: 1100,
+        height: 17,
+        backgroundColor: 'rgba(0,0,0,0.3)',
+      }}></div>
+      <button
+        style={{ position: 'absolute', right: 0}}
+        onClick={() => setHovering(hovering === 'hovered' ? 'idle' : 'hovered')}
+      >
+        룰렛 돌리기
+      </button>
+    </div>
+  );
+}
+
+const MissionList = posed.div({
+  idle: {
+    top: 0,
+    transition: {
+      default: { ease: 'easeInOut', duration: 5000 }
+    }
+  },
+  hovered: {
+    top: -917,
+    transition: {
+      default: { ease: 'easeInOut', duration: 5000 }
+    }
+  },
+});
+
 
 const Bingo = (props: BingoProps) => {
   const {bingoData} = props;
@@ -124,7 +240,7 @@ const BingoStatus = (props: BingoStatusProps) => {
 const RouletteButton = (props:RouletteButtonProps) => {
   return (
     <div>
-      <button onClick={props.onClick}>RANDOM</button>
+      <button onClick={props.onClick}>각성 5성</button>
     </div>
   );
 }
@@ -156,14 +272,148 @@ const checkBingoLines = (bingoList: BingoItem[], bingoLines: BingoLine[]): Bingo
   return newBingoLines;
 }
 
-// setComplete complete
-//   complete: gray mode, 도장 이미지 꽝
-//     bingo: 줄 슥 그어지게
-//   close window
+const GoldenBell = () => {
+  const [line, setLine] = useState({
+    randomId: 0,
+    show: false,
+  });
+  return (
+    <>
+      <button onClick={() => setLine({ randomId: Math.floor(Math.random() * 5), show: true })}>Call</button>
+      <div
+        style={{
+          position: 'absolute',
+          width: '500px',
+          height: '500px',
+          top: '25px',
+          left: '25px',
+          // backgroundColor: 'rgba(240,255,0,0.1)',
+          overflow: 'hidden',
+        }}
+      >
+        <GoldenBellLine
+          id={0}
+          top={0}
+          randomId={line.randomId}
+          show={line.show}
+        />
+        <GoldenBellLine
+          id={1}
+          top={100}
+          randomId={line.randomId}
+          show={line.show}
+        />
+        <GoldenBellLine
+          id={2}
+          top={200}
+          randomId={line.randomId}
+          show={line.show}
+        />
+        <GoldenBellLine
+          id={3}
+          top={300}
+          randomId={line.randomId}
+          show={line.show}
+        />
+        <GoldenBellLine
+          id={4}
+          top={400}
+          randomId={line.randomId}
+          show={line.show}
+        />
+        {/* <div
+          style={{
+            position: 'absolute',
+            width: '500px',
+            height: '100px',
+            top: 100,
+            left: 0,
+            backgroundColor: 'rgba(240,255,0,0.3)',
+            visibility: 'hidden',
+          }}
+        ></div>
+        <div
+          style={{
+            position: 'absolute',
+            width: '500px',
+            height: '100px',
+            top: 200,
+            left: 0,
+            backgroundColor: 'rgba(240,255,0,0.3)',
+            visibility: 'hidden',
+          }}
+        ></div>
+        <div
+          style={{
+            position: 'absolute',
+            width: '500px',
+            height: '100px',
+            top: 300,
+            left: 0,
+            backgroundColor: 'rgba(240,255,0,0.3)',
+            visibility: 'hidden',
+          }}
+        ></div>
+        <div
+          style={{
+            position: 'absolute',
+            width: '500px',
+            height: '100px',
+            top: 400,
+            left: 0,
+            backgroundColor: 'rgba(240,255,0,0.3)',
+            visibility: 'hidden',
+          }}
+        ></div> */}
+      </div>
+    </>
+  );
+}
 
-// updateBingoCount
-//   bingoList complete
-//   updateView
+interface GoldenBellLineProps {
+  id: number;
+  top: number;
+  randomId: number;
+  show: boolean;
+}
 
+const GoldenBellLine = (props: GoldenBellLineProps) => {
+  const {id, top, randomId, show} = props;
+  const isVisible = (show && id === randomId) ? 'visible' : 'hidden';
+  return (
+    <div
+      style={{
+        position: 'absolute',
+        width: '500px',
+        height: '100px',
+        top: top,
+        left: 0,
+        transform: 'rotate(45deg)',
+        backgroundColor: 'rgba(240,255,0,0.3)',
+        visibility: isVisible,
+      }}
+    ></div>
+  );
+}
+
+
+const GoldenBellLinePosed = posed.div({
+  idle: {
+    top: 0,
+    transition: {
+      default: { ease: 'easeInOut', duration: 5000 }
+    }
+  },
+  spin: {
+    top: 100,
+    transition: {
+      default: { ease: 'easeInOut', duration: 5000 }
+    }
+  }
+})
+
+const callGoldenBell = () => {
+
+}
 
 export default App;
