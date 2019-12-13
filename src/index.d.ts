@@ -1,5 +1,6 @@
 interface BingoProps {
   bingoData: BingoItem[];
+  onClickCell: (id: number) => void;
 }
 
 interface BingoItem {
@@ -12,6 +13,7 @@ interface BingoItem {
 
 interface BingoCellProps {
   bingoItem: BingoItem;
+  onClick: (id: number) => void;
 }
 
 interface RouletteButtonProps {
@@ -26,4 +28,13 @@ interface BingoLine {
 
 interface BingoStatusProps {
   bingoCount: number;
+}
+
+interface GoldenBellLineProps {
+  id: number;
+  top: number;
+  randomId: number;
+  show: boolean;
+  isColumn?: boolean;
+  isDigonal?: boolean;
 }

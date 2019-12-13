@@ -32,6 +32,21 @@ const App = () => {
     });
   }
 
+  const handleClickBingoCell = (id: number) => {
+    console.log(`handleClickBingoCell called`);
+    const newBingoData: BingoItem[] = bingo.bingoData.map(bingoItem => {
+      return bingoItem.id === id ? { ...bingoItem, isComplete: true } : bingoItem;
+    })
+    const newBingoLines = checkBingoLines(newBingoData, bingo.bingoLines);
+    const newBingoCount = newBingoLines.filter(bingoLine => bingoLine.isBingo).length;
+
+    setBingo({
+      bingoData: newBingoData,
+      bingoLines: newBingoLines,
+      bingoCount: newBingoCount,
+    });
+  }
+
   useEffect(() => {
     console.log('RENDER!');
   });
@@ -45,6 +60,7 @@ const App = () => {
       <div style={{ display: 'flex', position: 'relative', }}>
         <Bingo
           bingoData={bingo.bingoData}
+          onClickCell={handleClickBingoCell}
         />
         <GoldenBell />
         <div style={{ width: '300px', height: '550px', backgroundColor: 'lightgray' }}>
@@ -69,7 +85,6 @@ const Mission = () => {
       backgroundColor: '#EEEEEE',
       display: 'flex',
       justifyContent: 'center',
-      // alignItems: 'center',
       overflow: 'hidden',
       position: 'relative',
     }}>
@@ -192,6 +207,7 @@ const Bingo = (props: BingoProps) => {
             <BingoCell
               key={bingoItem.id}
               bingoItem={bingoItem}
+              onClick={props.onClickCell}
             />
           );
         })}
@@ -203,6 +219,12 @@ const Bingo = (props: BingoProps) => {
 const BingoCell = (props: BingoCellProps) => {
   const {id, icon, description, isComplete, isBingo} = props.bingoItem;
   const backgroundColor = isBingo ? 'red' : isComplete ? 'yellow' : 'white';
+
+  const handleClick = () => {
+    console.log(`handleClick`);
+    props.onClick(id);
+  }
+
   return (
     <div style={{
       width: '100px',
@@ -210,16 +232,19 @@ const BingoCell = (props: BingoCellProps) => {
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-    }}>
-      <div style={{
-        width: '80px',
-        height: '80px',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: backgroundColor,
-        flexDirection: 'column',
-      }}>
+    }}
+    onClick={handleClick}>
+      <div
+        style={{
+          width: '80px',
+          height: '80px',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: backgroundColor,
+          flexDirection: 'column',
+        }}
+      >
         <p style={{ margin: 0 }}>{id}</p>
         <p style={{ margin: 0 }}>{icon}</p>
         <p style={{ margin: 0 }}>{description}</p>
@@ -277,9 +302,23 @@ const GoldenBell = () => {
     randomId: 0,
     show: false,
   });
+  const highlightList = [
+    {id: 0, top: 0},
+    {id: 1, top: 100},
+    {id: 2, top: 200},
+    {id: 3, top: 300},
+    {id: 4, top: 400},
+    {id: 5, top: 0, isColumn: true},
+    {id: 6, top: 100, isColumn: true},
+    {id: 7, top: 200, isColumn: true},
+    {id: 8, top: 300, isColumn: true},
+    {id: 9, top: 400, isColumn: true},
+    {id: 10, top: 0, isDigonal: true},
+    {id: 11, top: 0, isColumn: true, isDigonal: true},
+  ];
   return (
     <>
-      <button onClick={() => setLine({ randomId: Math.floor(Math.random() * 5), show: true })}>Call</button>
+      <button onClick={() => setLine({ randomId: Math.floor(Math.random() * 12), show: true })}>Call</button>
       <div
         style={{
           position: 'absolute',
@@ -287,99 +326,78 @@ const GoldenBell = () => {
           height: '500px',
           top: '25px',
           left: '25px',
-          // backgroundColor: 'rgba(240,255,0,0.1)',
           overflow: 'hidden',
+          pointerEvents: 'none',
         }}
       >
-        <GoldenBellLine
-          id={0}
-          top={0}
-          randomId={line.randomId}
-          show={line.show}
-        />
-        <GoldenBellLine
-          id={1}
-          top={100}
-          randomId={line.randomId}
-          show={line.show}
-        />
-        <GoldenBellLine
-          id={2}
-          top={200}
-          randomId={line.randomId}
-          show={line.show}
-        />
-        <GoldenBellLine
-          id={3}
-          top={300}
-          randomId={line.randomId}
-          show={line.show}
-        />
-        <GoldenBellLine
-          id={4}
-          top={400}
-          randomId={line.randomId}
-          show={line.show}
-        />
-        {/* <div
-          style={{
-            position: 'absolute',
-            width: '500px',
-            height: '100px',
-            top: 100,
-            left: 0,
-            backgroundColor: 'rgba(240,255,0,0.3)',
-            visibility: 'hidden',
-          }}
-        ></div>
-        <div
-          style={{
-            position: 'absolute',
-            width: '500px',
-            height: '100px',
-            top: 200,
-            left: 0,
-            backgroundColor: 'rgba(240,255,0,0.3)',
-            visibility: 'hidden',
-          }}
-        ></div>
-        <div
-          style={{
-            position: 'absolute',
-            width: '500px',
-            height: '100px',
-            top: 300,
-            left: 0,
-            backgroundColor: 'rgba(240,255,0,0.3)',
-            visibility: 'hidden',
-          }}
-        ></div>
-        <div
-          style={{
-            position: 'absolute',
-            width: '500px',
-            height: '100px',
-            top: 400,
-            left: 0,
-            backgroundColor: 'rgba(240,255,0,0.3)',
-            visibility: 'hidden',
-          }}
-        ></div> */}
+        {highlightList.map(highlight => {
+          return (
+            <GoldenBellLine
+              id={highlight.id}
+              top={highlight.top}
+              randomId={line.randomId}
+              show={line.show}
+              isColumn={highlight.isColumn}
+              isDigonal={highlight.isDigonal}
+            />
+          );
+        })}
       </div>
     </>
   );
 }
 
-interface GoldenBellLineProps {
-  id: number;
-  top: number;
-  randomId: number;
-  show: boolean;
-}
-
 const GoldenBellLine = (props: GoldenBellLineProps) => {
-  const {id, top, randomId, show} = props;
-  const isVisible = (show && id === randomId) ? 'visible' : 'hidden';
+  const {id, top, randomId, show, isColumn, isDigonal} = props;
+  const isDisplaying = (show && id === randomId) ? 'block' : 'none';
+  if (isColumn && !isDigonal) {
+    return (
+      <div
+        style={{
+          position: 'absolute',
+          width: '100px',
+          height: '500px',
+          top: 0,
+          left: top,
+          backgroundColor: 'rgba(240,255,0,0.3)',
+          display: isDisplaying,
+        }}
+      ></div>
+    );
+  }
+  if (isDigonal) {
+    if (isColumn) {
+      return (
+        <div
+          style={{
+            position: 'absolute',
+            width: '1000px',
+            height: '120px',
+            top: 190,
+            left: -250,
+            transform: 'rotate(-45deg)',
+            backgroundColor: 'rgba(240,255,0,0.3)',
+            display: isDisplaying,
+          }}
+        ></div>
+      );
+    } else {
+      return (
+        <div
+          style={{
+            position: 'absolute',
+            width: '1000px',
+            height: '120px',
+            top: 190,
+            left: -250,
+            transform: 'rotate(45deg)',
+            backgroundColor: 'rgba(240,255,0,0.3)',
+            display: isDisplaying,
+          }}
+        ></div>
+      );
+    }
+  }
   return (
     <div
       style={{
@@ -388,9 +406,8 @@ const GoldenBellLine = (props: GoldenBellLineProps) => {
         height: '100px',
         top: top,
         left: 0,
-        transform: 'rotate(45deg)',
         backgroundColor: 'rgba(240,255,0,0.3)',
-        visibility: isVisible,
+        display: isDisplaying,
       }}
     ></div>
   );
