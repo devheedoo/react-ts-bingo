@@ -7,10 +7,11 @@ interface BingoItem {
   icon: string;
   description: string;
   isComplete: boolean;
+  isBingo: boolean;
 }
 
 interface BingoCellProps {
-  isComplete: boolean;
+  bingoItem: BingoItem;
 }
 
 interface RouletteButtonProps {

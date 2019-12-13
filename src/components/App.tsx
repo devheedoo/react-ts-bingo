@@ -5,39 +5,45 @@ import BingoData from '../BingoData';
 import BingoLines from '../BingoLines';
 
 const App = () => {
-  const [bingoData, setBingoData] = useState(BingoData);
-  const [bingoLines, setBingoLines] = useState(BingoLines);
-  const [bingoCount, setBingoCount] = useState(0);
+  const [bingo, setBingo] = useState({
+    bingoData: BingoData,
+    bingoLines: BingoLines,
+    bingoCount: 0,
+  });
 
   const handleClickRouletteButton = () => {
-    const randomBingoItemId: number = getRandomIncompleteBingoItemId(bingoData);
+    const randomBingoItemId: number = getRandomIncompleteBingoItemId(bingo.bingoData);
     if (randomBingoItemId === -1) {
       console.log(`No incomplete item remains`);
       return;
     }
-    const newBingoData: BingoItem[] = bingoData.map(bingoItem => {
-      if (bingoItem.id === randomBingoItemId) bingoItem.isComplete = true;
-      return bingoItem;
+    const newBingoData: BingoItem[] = bingo.bingoData.map(bingoItem => {
+      return bingoItem.id === randomBingoItemId ? { ...bingoItem, isComplete: true } : bingoItem;
     })
-    const checkedBingoLines = checkBingo(bingoData, bingoLines);
-    const newBingoCount = checkedBingoLines.filter(bingoLine => bingoLine.isBingo).length;
-    
-    setBingoData(newBingoData);
-    setBingoLines(checkedBingoLines);
-    setBingoCount(newBingoCount);
+    const newBingoLines = checkBingoLines(newBingoData, bingo.bingoLines);
+    const newBingoCount = newBingoLines.filter(bingoLine => bingoLine.isBingo).length;
+
+    setBingo({
+      bingoData: newBingoData,
+      bingoLines: newBingoLines,
+      bingoCount: newBingoCount,
+    });
   }
-  // drawBingo
+
+  useEffect(() => {
+    console.log('RENDER!');
+  });
 
   return (
     <div>
       <h1>MEMORY</h1>
       <div style={{ display: 'flex' }}>
         <Bingo
-          bingoData={bingoData}
+          bingoData={bingo.bingoData}
         />
         <div style={{ width: '300px', height: '550px', backgroundColor: 'lightgray' }}>
           <BingoStatus
-            bingoCount={bingoCount}
+            bingoCount={bingo.bingoCount}
           />
           <RouletteButton
             onClick={handleClickRouletteButton}
@@ -69,10 +75,7 @@ const Bingo = (props: BingoProps) => {
           return (
             <BingoCell
               key={bingoItem.id}
-              id={bingoItem.id}
-              icon={bingoItem.icon}
-              description={bingoItem.description}
-              isComplete={bingoItem.isComplete}
+              bingoItem={bingoItem}
             />
           );
         })}
@@ -81,9 +84,9 @@ const Bingo = (props: BingoProps) => {
   );
 }
 
-const BingoCell = (props: BingoItem) => {
-  const {isComplete} = props;
-  const backgroundColor = isComplete ? 'yellow' : 'white';
+const BingoCell = (props: BingoCellProps) => {
+  const {id, icon, description, isComplete, isBingo} = props.bingoItem;
+  const backgroundColor = isBingo ? 'red' : isComplete ? 'yellow' : 'white';
   return (
     <div style={{
       width: '100px',
@@ -101,9 +104,9 @@ const BingoCell = (props: BingoItem) => {
         backgroundColor: backgroundColor,
         flexDirection: 'column',
       }}>
-        <p style={{ margin: 0 }}>{props.id}</p>
-        <p style={{ margin: 0 }}>{props.icon}</p>
-        <p style={{ margin: 0 }}>{props.description}</p>
+        <p style={{ margin: 0 }}>{id}</p>
+        <p style={{ margin: 0 }}>{icon}</p>
+        <p style={{ margin: 0 }}>{description}</p>
       </div>
     </div>
   );
@@ -138,7 +141,7 @@ const getRandomIncompleteBingoItemId = (bingoList: BingoItem[]): number => {
 }
 
 // 현재 칸 기준 빙고 완성 여부
-const checkBingo = (bingoList: BingoItem[], bingoLines: BingoLine[]): BingoLine[] => {
+const checkBingoLines = (bingoList: BingoItem[], bingoLines: BingoLine[]): BingoLine[] => {
   const completeBingoList: BingoItem[] = bingoList.filter(bingo => bingo.isComplete);
   const completeBingoIds: number[] = completeBingoList.map(bingo => bingo.id);
   const newBingoLines = bingoLines.map((bingoLine) => {
