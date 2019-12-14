@@ -22,13 +22,14 @@ import BingoCountFrameImage from '../images/bingo_count_frame.png';
 import RouletteButtonImage from '../images/roulette_button.png';
 import RouletteCoverImage from '../images/roulette_cover.png';
 import RouletteFrameImage from '../images/roulette_frame.png';
-import Summon5LdImage from '../images/summon_5_ld.png';
 import Summon5WfwImage from '../images/summon_5_wfw.png';
 import LogoBubbleImage from '../images/logo_bubble.png';
 
 import BingoBoard from './bingo-board';
 import Mission from './mission';
 import RedPen from './red-pen';
+import Summon5LdButton from './summon-5-ld';
+import Summon5WfwButton from './summon-5-wfw';
 
 const App = () => {
   const [bingo, setBingo] = useState({
@@ -150,8 +151,8 @@ const App = () => {
               </div>
             </div>
             
-            <img src={Summon5LdImage} style={{ width: '200px', height: 'auto', marginTop: '50px' }} />
-            <img src={Summon5WfwImage} style={{ width: '200px', height: 'auto' }} />
+            <Summon5LdButton />
+            <Summon5WfwButton />
           </div>
           <div style={{
             width: '300px',
