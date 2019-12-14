@@ -26,9 +26,9 @@ import Summon5LdImage from '../images/summon_5_ld.png';
 import Summon5WfwImage from '../images/summon_5_wfw.png';
 import LogoBubbleImage from '../images/logo_bubble.png';
 
-import BingoBoard from './BingoBoard';
-import Mission from './Mission';
-import RedPen from './RedPen';
+import BingoBoard from './bingo-board';
+import Mission from './mission';
+import RedPen from './red-pen';
 
 const App = () => {
   const [bingo, setBingo] = useState({
