@@ -38,3 +38,8 @@ interface GoldenBellLineProps {
   isColumn?: boolean;
   isDigonal?: boolean;
 }
+
+declare module "*.png" {
+  const value: any;
+  export = value;
+}

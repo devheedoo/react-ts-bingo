@@ -9,6 +9,9 @@ import styled from 'styled-components';
 import BackgroundImage from '../images/background.png';
 import TitleImage from '../images/title.png';
 
+import Bingo from './Bingo';
+import Mission from './Mission';
+
 const App = () => {
   const [bingo, setBingo] = useState({
     bingoData: BingoData,
@@ -65,16 +68,16 @@ const App = () => {
       backgroundRepeat: 'no-repeat'
     }}>
       <img src={TitleImage} style={{ width: '800px', justifyContent: 'center' }} />
-      <div style={{ display: 'flex' }}>
-        <Mission />
-      </div>
-      <div style={{ display: 'flex', position: 'relative' }}>
-        {/* <div style={{ }} */}
+      <div style={{ display: 'flex', width: '1240px', flexDirection: 'row', justifyContent: 'center' }}>
         <Bingo
           bingoData={bingo.bingoData}
           onClickCell={handleClickBingoCell}
         />
         <GoldenBell />
+        {/* </div> */}
+        <Mission />
+      </div>
+      {/* <div style={{ display: 'flex', position: 'relative' }}>
         <div style={{ width: '300px', height: '550px', backgroundColor: 'lightgray' }}>
           <BingoStatus
             bingoCount={bingo.bingoCount}
@@ -83,187 +86,15 @@ const App = () => {
             onClick={handleClickRouletteButton}
           />
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
 
-const Mission = () => {
-  const [hovering, setHovering] = useState('idle');
-  return (
-    <div style={{
-      width: '1100px',
-      height: '50px',
-      backgroundColor: '#EEEEEE',
-      display: 'flex',
-      justifyContent: 'center',
-      overflow: 'hidden',
-      position: 'relative',
-    }}>
-      <MissionList
-        pose={hovering}
-        style={{
-          position: 'absolute',
-          top: 0
-        }}
-      >
-        <ul>
-          <li>Mission1</li>
-          <li>Mission2</li>
-          <li>Mission3</li>
-          <li>Mission4</li>
-          <li>Mission5</li>
-          <li>Mission6</li>
-          <li>Mission7</li>
-          <li>Mission8</li>
-          <li>Mission9</li>
-          <li>Mission1</li>
-          <li>Mission2</li>
-          <li>Mission3</li>
-          <li>Mission4</li>
-          <li>Mission5</li>
-          <li>Mission6</li>
-          <li>Mission7</li>
-          <li>Mission8</li>
-          <li>Mission9</li>
-          <li>Mission1</li>
-          <li>Mission2</li>
-          <li>Mission3</li>
-          <li>Mission4</li>
-          <li>Mission5</li>
-          <li>Mission6</li>
-          <li>Mission7</li>
-          <li>Mission8</li>
-          <li>Mission9</li>
-          <li>Mission1</li>
-          <li>Mission2</li>
-          <li>Mission3</li>
-          <li>Mission4</li>
-          <li>Mission5</li>
-          <li>Mission6</li>
-          <li>Mission7</li>
-          <li>Mission8</li>
-          <li>Mission9</li>
-          <li>Mission1</li>
-          <li>Mission2</li>
-          <li>Mission3</li>
-          <li>Mission4</li>
-          <li>Mission5</li>
-          <li>Mission6</li>
-          <li>Mission7</li>
-          <li>Mission8</li>
-          <li>Mission9</li>
-          <li>Mission1</li>
-          <li>Mission2</li>
-          <li>Mission3</li>
-          <li>Mission4</li>
-          <li>Mission5</li>
-          <li>Mission6</li>
-          <li>Mission7</li>
-          <li>Mission8</li>
-          <li>Mission9</li>
-        </ul>
-      </MissionList>
-      <div style={{
-        position: 'absolute',
-        top: 17,
-        width: 1100,
-        height: 17,
-        backgroundColor: 'rgba(0,0,0,0.3)',
-      }}></div>
-      <button
-        style={{ position: 'absolute', right: 0}}
-        onClick={() => setHovering(hovering === 'hovered' ? 'idle' : 'hovered')}
-      >
-        룰렛 돌리기
-      </button>
-    </div>
-  );
-}
-
-const MissionList = posed.div({
-  idle: {
-    top: 0,
-    transition: {
-      default: { ease: 'easeInOut', duration: 5000 }
-    }
-  },
-  hovered: {
-    top: -917,
-    transition: {
-      default: { ease: 'easeInOut', duration: 5000 }
-    }
-  },
-});
 
 
-const Bingo = (props: BingoProps) => {
-  const {bingoData} = props;
-  return (
-    <div style={{ 
-      width: '800px',
-      height: '550px',
-      backgroundColor: 'gray',
-      boxSizing: 'border-box',
-      padding: '25px',
-    }}>
-      <div style={{ 
-        width: '500px',
-        height: '500px',
-        backgroundColor: 'lightgray',
-        display: 'flex',
-        flexWrap: 'wrap',
-      }}>
-        {bingoData.map(bingoItem => {
-          return (
-            <BingoCell
-              key={bingoItem.id}
-              bingoItem={bingoItem}
-              onClick={props.onClickCell}
-            />
-          );
-        })}
-      </div>
-    </div>
-  );
-}
 
-const BingoCell = (props: BingoCellProps) => {
-  const {id, icon, description, isComplete, isBingo} = props.bingoItem;
-  const backgroundColor = isBingo ? 'red' : isComplete ? 'yellow' : 'white';
 
-  const handleClick = () => {
-    console.log(`handleClick`);
-    props.onClick(id);
-  }
-
-  return (
-    <div style={{
-      width: '100px',
-      height: '100px',
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-    }}
-    onClick={handleClick}>
-      <div
-        style={{
-          width: '80px',
-          height: '80px',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          backgroundColor: backgroundColor,
-          flexDirection: 'column',
-        }}
-      >
-        <p style={{ margin: 0 }}>{id}</p>
-        <p style={{ margin: 0 }}>{icon}</p>
-        <p style={{ margin: 0 }}>{description}</p>
-      </div>
-    </div>
-  );
-}
 
 const BingoStatus = (props: BingoStatusProps) => {
   const {bingoCount} = props;
@@ -330,14 +161,14 @@ const GoldenBell = () => {
   ];
   return (
     <>
-      <button onClick={() => setLine({ randomId: Math.floor(Math.random() * 12), show: true })}>Call</button>
+      {/* <button onClick={() => setLine({ randomId: Math.floor(Math.random() * 12), show: true })}>Call</button> */}
       <div
         style={{
           position: 'absolute',
           width: '500px',
           height: '500px',
           top: '25px',
-          left: '25px',
+          left: '75px',
           overflow: 'hidden',
           pointerEvents: 'none',
         }}
