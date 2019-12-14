@@ -1,8 +1,8 @@
 /// <reference path='../index.d.ts' />
 
 import React, { useState, useEffect } from 'react';
-import BingoData from '../BingoData';
-import BingoLines from '../BingoLines';
+import BingoData from '../bingo-data';
+import BingoLines from '../bingo-lines';
 import posed from 'react-pose';
 import styled from 'styled-components';
 
