@@ -6,6 +6,9 @@ import BingoLines from '../BingoLines';
 import posed from 'react-pose';
 import styled from 'styled-components';
 
+import BackgroundImage from '../images/background.png';
+import TitleImage from '../images/title.png';
+
 const App = () => {
   const [bingo, setBingo] = useState({
     bingoData: BingoData,
@@ -53,12 +56,20 @@ const App = () => {
   });
 
   return (
-    <div>
-      <h1>2019 버블 파이널 빙고</h1>
+    <div style={{
+      margin: 0,
+      padding: 0,
+      backgroundImage: `url(${BackgroundImage})`,
+      backgroundPosition: 'center',
+      backgroundSize: 'cover',
+      backgroundRepeat: 'no-repeat'
+    }}>
+      <img src={TitleImage} style={{ width: '800px', justifyContent: 'center' }} />
       <div style={{ display: 'flex' }}>
         <Mission />
       </div>
-      <div style={{ display: 'flex', position: 'relative', }}>
+      <div style={{ display: 'flex', position: 'relative' }}>
+        {/* <div style={{ }} */}
         <Bingo
           bingoData={bingo.bingoData}
           onClickCell={handleClickBingoCell}

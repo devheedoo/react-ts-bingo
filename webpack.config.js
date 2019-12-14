@@ -30,6 +30,14 @@ module.exports = {
         use: 'source-map-loader',
         enforce: 'pre'
       },
+      {
+        test: /\.(png|svg|jpg|gif)$/,
+        include: [
+          path.resolve(__dirname, 'src'),
+        ],
+        exclude: /node_modules/,
+        use: 'file-loader'
+      }
     ]
   },
   plugins: [
