@@ -1,8 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import BingoData from '../BingoData';
-import BingoLines from '../BingoLines';
-import posed from 'react-pose';
-import styled from 'styled-components';
 
 const BingoBoard = (props: BingoProps) => {
   const {bingoData} = props;
