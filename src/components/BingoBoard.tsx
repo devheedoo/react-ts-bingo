@@ -4,33 +4,25 @@ import BingoLines from '../BingoLines';
 import posed from 'react-pose';
 import styled from 'styled-components';
 
-const Bingo = (props: BingoProps) => {
+const BingoBoard = (props: BingoProps) => {
   const {bingoData} = props;
   return (
     <div style={{ 
-      width: '550px',
-      height: '550px',
-      backgroundColor: 'gray',
-      boxSizing: 'border-box',
-      padding: '25px',
+      width: '500px',
+      height: '500px',
+      backgroundColor: 'lightgray',
+      display: 'flex',
+      flexWrap: 'wrap',
     }}>
-      <div style={{ 
-        width: '500px',
-        height: '500px',
-        backgroundColor: 'lightgray',
-        display: 'flex',
-        flexWrap: 'wrap',
-      }}>
-        {bingoData.map(bingoItem => {
-          return (
-            <BingoCell
-              key={bingoItem.id}
-              bingoItem={bingoItem}
-              onClick={props.onClickCell}
-            />
-          );
-        })}
-      </div>
+      {bingoData.map(bingoItem => {
+        return (
+          <BingoCell
+            key={bingoItem.id}
+            bingoItem={bingoItem}
+            onClick={props.onClickCell}
+          />
+        );
+      })}
     </div>
   );
 }
@@ -64,12 +56,12 @@ const BingoCell = (props: BingoCellProps) => {
           flexDirection: 'column',
         }}
       >
-        <p style={{ margin: 0 }}>{id}</p>
+        {/* <p style={{ margin: 0 }}>{id}</p>
         <p style={{ margin: 0 }}>{icon}</p>
-        <p style={{ margin: 0 }}>{description}</p>
+        <p style={{ margin: 0 }}>{description}</p> */}
       </div>
     </div>
   );
 }
 
-export default Bingo;
+export default BingoBoard;

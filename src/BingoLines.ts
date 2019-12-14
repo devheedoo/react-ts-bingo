@@ -51,14 +51,14 @@ const BingoLines: BingoLine[] = [
     indexes: [5,10,15,20,25],
     isBingo: false,
   },
-  // digonal
+  // diagonal
   {
-    id: 'DIGONAL_RIGHT_DOWN',
+    id: 'DIAGONAL_RIGHT_DOWN',
     indexes: [1,7,13,19,25],
     isBingo: false,
   },
   {
-    id: 'DIGONAL_RIGHT_UP',
+    id: 'DIAGONAL_RIGHT_UP',
     indexes: [5,9,13,17,21],
     isBingo: false,
   },

@@ -30,13 +30,15 @@ interface BingoStatusProps {
   bingoCount: number;
 }
 
-interface GoldenBellLineProps {
-  id: number;
+interface RedPenProps {
+  checkedLines: string[];
+}
+
+interface RedLineProps {
+  id: string;
   top: number;
-  randomId: number;
-  show: boolean;
   isColumn?: boolean;
-  isDigonal?: boolean;
+  isDiagonal?: boolean;
 }
 
 declare module "*.png" {
