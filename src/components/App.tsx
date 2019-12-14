@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import BingoData from '../BingoData';
 import BingoLines from '../BingoLines';
 import posed from 'react-pose';
+import styled from 'styled-components';
 
 const App = () => {
   const [bingo, setBingo] = useState({
@@ -53,7 +54,7 @@ const App = () => {
 
   return (
     <div>
-      <h1>MEMORY</h1>
+      <h1>2019 버블 파이널 빙고</h1>
       <div style={{ display: 'flex' }}>
         <Mission />
       </div>
@@ -332,7 +333,8 @@ const GoldenBell = () => {
       >
         {highlightList.map(highlight => {
           return (
-            <GoldenBellLine
+            <StyledGoldenBellLinePosed
+              pose={'idle'}
               id={highlight.id}
               top={highlight.top}
               randomId={line.randomId}
@@ -347,87 +349,36 @@ const GoldenBell = () => {
   );
 }
 
-const GoldenBellLine = (props: GoldenBellLineProps) => {
-  const {id, top, randomId, show, isColumn, isDigonal} = props;
-  const isDisplaying = (show && id === randomId) ? 'block' : 'none';
-  if (isColumn && !isDigonal) {
-    return (
-      <div
-        style={{
-          position: 'absolute',
-          width: '100px',
-          height: '500px',
-          top: 0,
-          left: top,
-          backgroundColor: 'rgba(240,255,0,0.3)',
-          display: isDisplaying,
-        }}
-      ></div>
-    );
-  }
-  if (isDigonal) {
-    if (isColumn) {
-      return (
-        <div
-          style={{
-            position: 'absolute',
-            width: '1000px',
-            height: '120px',
-            top: 190,
-            left: -250,
-            transform: 'rotate(-45deg)',
-            backgroundColor: 'rgba(240,255,0,0.3)',
-            display: isDisplaying,
-          }}
-        ></div>
-      );
-    } else {
-      return (
-        <div
-          style={{
-            position: 'absolute',
-            width: '1000px',
-            height: '120px',
-            top: 190,
-            left: -250,
-            transform: 'rotate(45deg)',
-            backgroundColor: 'rgba(240,255,0,0.3)',
-            display: isDisplaying,
-          }}
-        ></div>
-      );
-    }
-  }
-  return (
-    <div
-      style={{
-        position: 'absolute',
-        width: '500px',
-        height: '100px',
-        top: top,
-        left: 0,
-        backgroundColor: 'rgba(240,255,0,0.3)',
-        display: isDisplaying,
-      }}
-    ></div>
-  );
-}
-
-
 const GoldenBellLinePosed = posed.div({
   idle: {
-    top: 0,
+    // top: 0,
     transition: {
       default: { ease: 'easeInOut', duration: 5000 }
     }
   },
   spin: {
-    top: 100,
+    // top: 100,
     transition: {
       default: { ease: 'easeInOut', duration: 5000 }
     }
   }
-})
+});
+
+const BINGO_LINE_THICKNESS = 20;
+const BINGO_LINE_LENGTH = 500;
+const BINGO_LINE_LENGTH_DIAGONAL = 1000;
+
+const StyledGoldenBellLinePosed = styled(GoldenBellLinePosed)<GoldenBellLineProps>`
+  position: absolute;
+  width: ${props => props.isDigonal ? BINGO_LINE_LENGTH_DIAGONAL : (!props.isColumn ? BINGO_LINE_LENGTH : BINGO_LINE_THICKNESS)}px;
+  height: ${props => props.isColumn && !props.isDigonal ? BINGO_LINE_LENGTH : BINGO_LINE_THICKNESS}px;
+  top: ${props => props.isDigonal ? 240 : (!props.isColumn ? props.top + 40 : 0)}px;
+  left: ${props => props.isDigonal ? -250 : (props.isColumn ? props.top + 40 : 0)}px;
+  transform: ${props => props.isDigonal ? (props.isColumn ? 'rotate(-45deg)' : 'rotate(45deg)') : ''};
+  background-color: rgba(255,0,0,0.3);
+  display: ${props => props.show && props.id === props.randomId ? 'block' : 'none'};
+  /* display: 'block'; */
+`;
 
 const callGoldenBell = () => {
 
