@@ -131,7 +131,6 @@ const App = () => {
           <div style={{
             width: '300px',
             height: '500px',
-            position: 'relative',
             // backgroundColor: 'lightgreen',
           }}>
             <MissionRoulette />
