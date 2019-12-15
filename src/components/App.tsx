@@ -32,6 +32,7 @@ import BingoCountBoard from './bingo-count-board';
 import Summon5LdButton from './summon-5-ld';
 import Summon5WfwButton from './summon-5-wfw';
 import MissionRoulette from './mission-roulette';
+import PopupSelectMember from './popup-select-member';
 
 const App = () => {
   const [bingo, setBingo] = useState({
@@ -136,23 +137,8 @@ const App = () => {
             <MissionRoulette />
           </div>
         </div>
-        {/* <Bingo
-          bingoData={bingo.bingoData}
-          onClickCell={handleClickBingoCell}
-        />
-        <GoldenBell />
-        <Mission /> */}
       </div>
-      {/* <div style={{ display: 'flex', position: 'relative' }}>
-        <div style={{ width: '300px', height: '550px', backgroundColor: 'lightgray' }}>
-          <BingoStatus
-            bingoCount={bingo.bingoCount}
-          />
-          <RouletteButton
-            onClick={handleClickRouletteButton}
-          />
-        </div>
-      </div> */}
+      <PopupSelectMember />
     </div>
   );
 };
