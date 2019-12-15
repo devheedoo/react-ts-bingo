@@ -28,8 +28,10 @@ import LogoBubbleImage from '../images/logo_bubble.png';
 import BingoBoard from './bingo-board';
 import Mission from './mission';
 import RedPen from './red-pen';
+import BingoCountBoard from './bingo-count-board';
 import Summon5LdButton from './summon-5-ld';
 import Summon5WfwButton from './summon-5-wfw';
+import Roulette from './roulette';
 
 const App = () => {
   const [bingo, setBingo] = useState({
@@ -122,35 +124,7 @@ const App = () => {
             height: '500px',
             // backgroundColor: 'lightblue',
           }}>
-            <div style={{
-              width: '200px',
-              height: '135px',
-              position: 'relative',
-            }}>
-              <img
-                src={BingoCountFrameImage}
-                style={{
-                  width: '145px',
-                  height: 'auto',
-                  marginTop: '20px',
-                }}
-              />
-              <div style={{
-                width: '139px',
-                height: '76px',
-                position: 'absolute',
-                top: '76px',
-                left: '30px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}>
-                <BingoCountImage
-                  bingoCount={bingo.bingoCount}
-                />
-              </div>
-            </div>
-            
+            <BingoCountBoard bingoCount={bingo.bingoCount} />
             <Summon5LdButton />
             <Summon5WfwButton />
           </div>
@@ -158,10 +132,8 @@ const App = () => {
             width: '300px',
             height: '500px',
             // backgroundColor: 'lightgreen',
-            // boxSizing: 'border-box',
-            // padding: 
           }}>
-            <img src={RouletteFrameImage} style={{ width: '300px', height: 'auto', marginTop: '20px', }} />
+            <Roulette />
           </div>
         </div>
         {/* <Bingo
@@ -184,107 +156,6 @@ const App = () => {
     </div>
   );
 };
-
-interface BingoCountImageProps {
-  bingoCount: number;
-}
-
-const BingoCountImage = (props: BingoCountImageProps) => {
-  const {bingoCount} = props;
-  if (bingoCount < 10) {
-    let bingoCountImage: any;
-    switch (bingoCount) {
-      case 0:
-        bingoCountImage = BingoCount0Image;
-        break;
-      case 1:
-        bingoCountImage = BingoCount1Image;
-        break;
-      case 2:
-        bingoCountImage = BingoCount2Image;
-        break;
-      case 3:
-        bingoCountImage = BingoCount3Image;
-        break;
-      case 4:
-        bingoCountImage = BingoCount4Image;
-        break;
-      case 5:
-        bingoCountImage = BingoCount5Image;
-        break;
-      case 6:
-        bingoCountImage = BingoCount6Image;
-        break;
-      case 7:
-        bingoCountImage = BingoCount7Image;
-        break;
-      case 8:
-        bingoCountImage = BingoCount8Image;
-        break;
-      case 9:
-        bingoCountImage = BingoCount9Image;
-        break;
-      default:
-        return (
-          <img
-            src={BingoCount0Image}
-            style={{
-          }} />
-        );
-    }
-    return (
-      <img
-        src={bingoCountImage}
-        style={{ height: '60px' }}
-      />
-    );
-  } else {
-    let bingoCountTensImage: any;
-    let bingoCountUnitsImage: any;
-    switch (bingoCount) {
-      case 10:
-        bingoCountTensImage = BingoCount1Image;
-        bingoCountUnitsImage = BingoCount0Image;
-        break;
-      case 11:
-        bingoCountTensImage = BingoCount1Image;
-        bingoCountUnitsImage = BingoCount1Image;
-        break;
-      case 12:
-        bingoCountTensImage = BingoCount1Image;
-        bingoCountUnitsImage = BingoCount2Image;
-        break;
-      default:
-        return (
-          <>
-            <img
-              src={BingoCount1Image}
-              style={{ height: '60px' }}
-            />
-            <img
-              src={BingoCount0Image}
-              style={{ height: '60px', marginLeft: '4px' }}
-            />
-          </>
-        );
-    }
-    return (
-      <>
-        <img
-          src={bingoCountTensImage}
-          style={{ height: '60px' }}
-        />
-        <img
-          src={bingoCountUnitsImage}
-          style={{ height: '60px', marginLeft: '4px' }}
-        />
-      </>
-    );
-  }
-}
-
-
-
 
 const BingoStatus = (props: BingoStatusProps) => {
   const {bingoCount} = props;
