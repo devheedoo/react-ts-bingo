@@ -142,121 +142,121 @@ const MissionList = posed.ul({
   mission0: {
     top: (22 - (0 * 30)) + 'px',
     transition: {
-      default: { ease: 'easeInOut', duration: 3000 }
+      default: { ease: 'easeInOut', duration: 5000 }
     }
   },
   mission1: {
     top: (22 - (1 * 30)) + 'px',
     transition: {
-      default: { ease: 'easeInOut', duration: 3000 }
+      default: { ease: 'easeInOut', duration: 5000 }
     }
   },
   mission2: {
     top: (22 - (2 * 30)) + 'px',
     transition: {
-      default: { ease: 'easeInOut', duration: 3000 }
+      default: { ease: 'easeInOut', duration: 5000 }
     }
   },
   mission3: {
     top: (22 - (3 * 30)) + 'px',
     transition: {
-      default: { ease: 'easeInOut', duration: 3000 }
+      default: { ease: 'easeInOut', duration: 5000 }
     }
   },
   mission4: {
     top: (22 - (4 * 30)) + 'px',
     transition: {
-      default: { ease: 'easeInOut', duration: 3000 }
+      default: { ease: 'easeInOut', duration: 5000 }
     }
   },
   mission5: {
     top: (22 - (5 * 30)) + 'px',
     transition: {
-      default: { ease: 'easeInOut', duration: 3000 }
+      default: { ease: 'easeInOut', duration: 5000 }
     }
   },
   mission6: {
     top: (22 - (6 * 30)) + 'px',
     transition: {
-      default: { ease: 'easeInOut', duration: 3000 }
+      default: { ease: 'easeInOut', duration: 5000 }
     }
   },
   mission7: {
     top: (22 - (7 * 30)) + 'px',
     transition: {
-      default: { ease: 'easeInOut', duration: 3000 }
+      default: { ease: 'easeInOut', duration: 5000 }
     }
   },
   mission8: {
     top: (22 - (8 * 30)) + 'px',
     transition: {
-      default: { ease: 'easeInOut', duration: 3000 }
+      default: { ease: 'easeInOut', duration: 5000 }
     }
   },
   mission9: {
     top: (22 - (9 * 30)) + 'px',
     transition: {
-      default: { ease: 'easeInOut', duration: 3000 }
+      default: { ease: 'easeInOut', duration: 5000 }
     }
   },
   mission0d: {
     top: (22 - ((0 + (LENGTH * 4)) * 30)) + 'px',
     transition: {
-      default: { ease: 'easeInOut', duration: 3000 }
+      default: { ease: 'easeInOut', duration: 5000 }
     }
   },
   mission1d: {
     top: (22 - ((1 + (LENGTH * 4)) * 30)) + 'px',
     transition: {
-      default: { ease: 'easeInOut', duration: 3000 }
+      default: { ease: 'easeInOut', duration: 5000 }
     }
   },
   mission2d: {
     top: (22 - ((2 + (LENGTH * 4)) * 30)) + 'px',
     transition: {
-      default: { ease: 'easeInOut', duration: 3000 }
+      default: { ease: 'easeInOut', duration: 5000 }
     }
   },
   mission3d: {
     top: (22 - ((3 + (LENGTH * 4)) * 30)) + 'px',
     transition: {
-      default: { ease: 'easeInOut', duration: 3000 }
+      default: { ease: 'easeInOut', duration: 5000 }
     }
   },
   mission4d: {
     top: (22 - ((4 + (LENGTH * 4)) * 30)) + 'px',
     transition: {
-      default: { ease: 'easeInOut', duration: 3000 }
+      default: { ease: 'easeInOut', duration: 5000 }
     }
   },
   mission5d: {
     top: (22 - ((5 + (LENGTH * 4)) * 30)) + 'px',
     transition: {
-      default: { ease: 'easeInOut', duration: 3000 }
+      default: { ease: 'easeInOut', duration: 5000 }
     }
   },
   mission6d: {
     top: (22 - ((6 + (LENGTH * 4)) * 30)) + 'px',
     transition: {
-      default: { ease: 'easeInOut', duration: 3000 }
+      default: { ease: 'easeInOut', duration: 5000 }
     }
   },
   mission7d: {
     top: (22 - ((7 + (LENGTH * 4)) * 30)) + 'px',
     transition: {
-      default: { ease: 'easeInOut', duration: 3000 }
+      default: { ease: 'easeInOut', duration: 5000 }
     }
   },
   mission8d: {
     top: (22 - ((8 + (LENGTH * 4)) * 30)) + 'px',
     transition: {
-      default: { ease: 'easeInOut', duration: 3000 }
+      default: { ease: 'easeInOut', duration: 5000 }
     }
   },
   mission9d: {
     top: (22 - ((9 + (LENGTH * 4)) * 30)) + 'px',
     transition: {
-      default: { ease: 'easeInOut', duration: 3000 }
+      default: { ease: 'easeInOut', duration: 5000 }
     }
   },
 });
