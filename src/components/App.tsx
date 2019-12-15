@@ -31,7 +31,7 @@ import RedPen from './red-pen';
 import BingoCountBoard from './bingo-count-board';
 import Summon5LdButton from './summon-5-ld';
 import Summon5WfwButton from './summon-5-wfw';
-import Roulette from './roulette';
+import MissionRoulette from './mission-roulette';
 
 const App = () => {
   const [bingo, setBingo] = useState({
@@ -131,9 +131,10 @@ const App = () => {
           <div style={{
             width: '300px',
             height: '500px',
+            position: 'relative',
             // backgroundColor: 'lightgreen',
           }}>
-            <Roulette />
+            <MissionRoulette />
           </div>
         </div>
         {/* <Bingo
