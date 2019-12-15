@@ -30,6 +30,8 @@ const BingoCountBoard = (props: BingoCountBoardProps) => {
           width: '145px',
           height: 'auto',
           marginTop: '20px',
+          filter: 'drop-shadow(0px 5px 10px #000)',
+          // boxShadow: '0px 5px 10px rgba(0,0,0,0.8)'
         }}
       />
       <div style={{

@@ -26,9 +26,8 @@ const MissionRoulette = () => {
   const buttonStyle = {
     position: 'absolute',
     width: '300px',
-    top: isPressed ? '22px' : '20px',
+    top: '20px',
     left: 0,
-    backgroundColor: isHovered ? 'rgba(0,0,0,0.3)' : '',
   } as React.CSSProperties;
 // 22 -8 -38 
 
@@ -40,7 +39,14 @@ const MissionRoulette = () => {
       height: '200px',
       position: 'relative',
     }}>
-      <img src={RouletteFrameImage} style={{ width: '300px', height: 'auto', marginTop: '20px', }} />
+      <img src={RouletteFrameImage}
+        style={{ width: '300px',
+          height: 'auto',
+          marginTop: '20px',
+          filter: 'drop-shadow(0px 5px 10px #000)',
+          // boxShadow: '0px 5px 10px rgba(0,0,0,0.8)'
+        }}
+      />
       <div
         style={{
           width: '294px',
@@ -125,18 +131,42 @@ const MissionRoulette = () => {
           top: '76px',
           left: '3px'
         }} />
-      <img
-        src={RouletteButtonImage}
-        style={buttonStyle}
-        // onMouseEnter={() => setHovered(true)}
-        // onMouseLeave={() => setHovered(false)}
-        // onMouseDown={() => setPressed(true)}
-        // onMouseUp={() => setPressed(false)}
-        onClick={spinRoulette}
-      />
+      <PosedButton
+        style={{
+          position: 'absolute',
+          width: '300px',
+          top: '20px',
+          left: 0,
+        }}
+      >
+        <img
+          src={RouletteButtonImage}
+          style={{ width: '300px',}}
+          // style={buttonStyle}
+          // onMouseEnter={() => setHovered(true)}
+          // onMouseLeave={() => setHovered(false)}
+          // onMouseDown={() => setPressed(true)}
+          // onMouseUp={() => setPressed(false)}
+          onClick={spinRoulette}
+        />
+      </PosedButton>
     </div>
   );
 }
+
+const PosedButton = posed.div({
+  hoverable: true,
+  pressable: true,
+  init: {
+    scale: 1,
+  },
+  hover: {
+    scale: 1.05,
+  },
+  press: {
+    scale: 1,
+  }
+});
 
 const MissionList = posed.ul({
   mission0: {

@@ -1,20 +1,18 @@
 /// <reference path='../index.d.ts' />
 
-import React, { useState } from 'react';
+import React from 'react';
+import posed from 'react-pose';
 
 import Summon5WfwImage from '../images/summon_5_wfw.png';
 
 const Summon5WfwButton = () => {
-  const [isHovered, setHovered] = useState(false);
-  const [isPressed, setPressed] = useState(false);
   const imgStyle = {
     width: '200px',
     height: 'auto',
-    backgroundColor: isHovered ? 'rgba(0,0,0,0.3)' : '',
-    marginTop: isPressed ? '3px' : 0,
-  };
+    filter: 'drop-shadow(0px 5px 10px #eee)',
+  } as React.CSSProperties;
   return (
-    <button
+    <PosedSummonButton
       style={{
         padding: 0,
         background: 'none',
@@ -24,13 +22,23 @@ const Summon5WfwButton = () => {
       <img
         src={Summon5WfwImage}
         style={imgStyle}
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
-        onMouseDown={() => setPressed(true)}
-        onMouseUp={() => setPressed(false)}
       />
-    </button>
+    </PosedSummonButton>
   );
 }
+
+const PosedSummonButton = posed.div({
+  hoverable: true,
+  pressable: true,
+  init: {
+    scale: 1,
+  },
+  hover: {
+    scale: 1.05,
+  },
+  press: {
+    scale: 1,
+  }
+});
 
 export default Summon5WfwButton;
