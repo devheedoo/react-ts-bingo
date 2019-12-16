@@ -138,7 +138,9 @@ const App = () => {
           </div>
         </div>
       </div>
-      <PopupSelectMember />
+      <PopupSelectMember
+        // playerId
+      />
     </div>
   );
 };

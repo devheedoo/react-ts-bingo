@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import posed from 'react-pose';
 
 import BingoCount0Image from '../images/bingo_count_0.png';
@@ -12,19 +12,39 @@ import BingoCount7Image from '../images/bingo_count_7.png';
 import BingoCount8Image from '../images/bingo_count_8.png';
 import BingoCount9Image from '../images/bingo_count_9.png';
 
-const PopupSelectMember = () => {
+interface PopupSelectMemberProps {
+  // playerId: string;
+  onClickPlayer: any;
+}
+
+const PopupSelectMember = (props: PopupSelectMemberProps) => {
+  const [showPopup, setShowPopup] = useState(true);
+  // const {playerId} = props;
+
+  const handleClickPlayer = (event: React.MouseEvent) => {
+    console.log('handleClickPlayer()');
+    console.log(event.target.id);
+    // props.onClickPlayer();
+  }
+
+  const popupDivStyle = {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '1240px',
+    height: '700px',
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    display: showPopup ? 'flex' : 'none',
+  } as React.CSSProperties;
   return(
-    <div style={{
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      width: '1240px',
-      height: '700px',
-      backgroundColor: 'rgba(0,0,0,0.5)',
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-    }}>
+    <div style={popupDivStyle}
+    onClick={() => {
+      console.log('CLICK: dim div');
+      setShowPopup(false);
+    }}
+    >
       <div style={{
         width: '700px',
         height: '200px',
@@ -33,9 +53,12 @@ const PopupSelectMember = () => {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-      }}>
-        <PosedButton style={{ width: '80px', height: '80px' }}>
-          <img src={BingoCount0Image} style={{ height: '80px' }} />
+      }}
+      onClick={(event) => { console.log('CLICK: popup div'); event.stopPropagation(); }}
+      >
+        <PosedButton style={{ width: '80px', height: '80px' }}
+          onClick={handleClickPlayer}>
+          <img id={'player0'} src={BingoCount0Image} style={{ height: '80px' }} />
         </PosedButton>
         <PosedButton style={{ width: '80px', height: '80px' }}>
         <img src={BingoCount1Image} style={{ height: '80px' }} />

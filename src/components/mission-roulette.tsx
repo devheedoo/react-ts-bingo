@@ -67,6 +67,7 @@ const MissionRoulette = () => {
             top: '-8px',
             position: 'absolute',
             fontFamily: 'sans-serif',
+            fontWeight: 'bold',
             width: '294px',
             lineHeight: '30px',
           }}
