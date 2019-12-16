@@ -39,6 +39,7 @@ const App = () => {
     bingoData: BingoData,
     bingoLines: BingoLines,
     bingoCount: 0,
+    isBingoCellClicked: false,
   });
   const [history, setHistory] = useState([]);
 
@@ -58,6 +59,7 @@ const App = () => {
       bingoData: newBingoData,
       bingoLines: newBingoLines,
       bingoCount: newBingoCount,
+      isBingoCellClicked: bingo.isBingoCellClicked,
     });
   }
 
@@ -73,6 +75,15 @@ const App = () => {
       bingoData: newBingoData,
       bingoLines: newBingoLines,
       bingoCount: newBingoCount,
+      isBingoCellClicked: true,
+    });
+    console.log(bingo);
+  }
+
+  const showPopupSelectMember = () => {
+    setBingo({
+      ...bingo,
+      isBingoCellClicked: false,
     });
   }
 
@@ -139,7 +150,9 @@ const App = () => {
         </div>
       </div>
       <PopupSelectMember
-        // playerId
+        onClickPlayer={() => {}}
+        onClickDimDiv={handleClickPopupSelectMemberDimDiv}
+        show={bingo.isBingoCellClicked}
       />
     </div>
   );

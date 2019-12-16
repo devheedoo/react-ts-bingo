@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import posed from 'react-pose';
 
 import BingoCount0Image from '../images/bingo_count_0.png';
@@ -15,16 +15,29 @@ import BingoCount9Image from '../images/bingo_count_9.png';
 interface PopupSelectMemberProps {
   // playerId: string;
   onClickPlayer: any;
+  onClickDimDiv: any;
+  show: boolean;
 }
 
 const PopupSelectMember = (props: PopupSelectMemberProps) => {
+  const {show} = props;
   const [showPopup, setShowPopup] = useState(true);
-  // const {playerId} = props;
+
+  useEffect(() => {
+    setShowPopup(props.show);
+    console.log('useEffect!');
+  }, [props.show])
 
   const handleClickPlayer = (event: React.MouseEvent) => {
     console.log('handleClickPlayer()');
+    // @ts-ignore
     console.log(event.target.id);
-    // props.onClickPlayer();
+  }
+
+  const handleClickDimDev = () => {
+    console.log('CLICK: dim div');
+    setShowPopup(false);
+    props.onClickDimDiv(false);
   }
 
   const popupDivStyle = {
@@ -36,14 +49,13 @@ const PopupSelectMember = (props: PopupSelectMemberProps) => {
     backgroundColor: 'rgba(0,0,0,0.5)',
     justifyContent: 'center',
     alignItems: 'center',
-    display: showPopup ? 'flex' : 'none',
+    display: show && showPopup ? 'flex' : 'none',
   } as React.CSSProperties;
+
   return(
-    <div style={popupDivStyle}
-    onClick={() => {
-      console.log('CLICK: dim div');
-      setShowPopup(false);
-    }}
+    <div
+      style={popupDivStyle}
+      onClick={handleClickDimDev}
     >
       <div style={{
         width: '700px',
@@ -73,6 +85,11 @@ const PopupSelectMember = (props: PopupSelectMemberProps) => {
     </div>
   );
 }
+
+const posedPopup = posed.div({
+  show: {},
+  hidden: {},
+});
 
 const PosedButton = posed.div({
   hoverable: true,
