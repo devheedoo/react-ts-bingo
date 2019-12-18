@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import players from './Players';
 
-const COLOR_BRIGHT_YELLOW = 'rgba(254, 255, 191, 0.7)';
+const COLOR_WATER = 'rgba(0, 0, 255, 0.7)';
+const COLOR_FIRE = 'rgba(255, 0, 0, 0.7)';
+const COLOR_WIND = 'rgba(255, 200, 0, 0.7)';
+const COLOR_LIGHT = 'rgba(255, 255, 255, 0.7)';
+const COLOR_DARK = 'rgba(100, 0, 200, 0.7)';
+
 
 const BingoBoard = (props: BingoProps) => {
   const {bingoData} = props;
@@ -27,23 +32,55 @@ const BingoBoard = (props: BingoProps) => {
 }
 
 const getProfileImage = (memberId: PlayerId): any => {
-  const player = players.filter(player => player.id = memberId);
+  const player = players.filter(player => player.id === memberId);
+  let profileImage = null;
+  let profileBackgroundColor = 'white';
   if (player.length > 0) {
-    return player[0].profileImage;
+    profileImage = player[0].profileImage;
+    switch (memberId) {
+      case 'Amd':
+      case 'Choco':
+      case 'Gyul':
+        profileBackgroundColor = COLOR_DARK;
+        break;
+      case 'Giveme':
+        profileBackgroundColor = COLOR_FIRE;
+        break;
+      case 'Hichu':
+      case 'Bitter':
+      case 'Cube':
+        profileBackgroundColor = COLOR_LIGHT;
+        break;
+      case 'Penguin':
+      case 'Wonang':
+      case 'Kkasi':
+        profileBackgroundColor = COLOR_WATER;
+        break;
+      case 'Guri':
+      case 'Haedal':
+      case 'Darkkom':
+        profileBackgroundColor = COLOR_WIND;
+        break;
+      default:
+        profileBackgroundColor = COLOR_LIGHT;
+        break;
+    }
   }
-  return null;
+  return {profileImage, profileBackgroundColor};
 }
 
 const BingoCell = (props: BingoCellProps) => {
   const {id, isComplete, isBingo, memberWhoCompletes} = props.bingoItem;
-  const backgroundColor = isBingo ? 'red' : isComplete ? COLOR_BRIGHT_YELLOW : 'white';
-
+  
   const handleClick = () => {
     console.log(`handleClick`);
     props.onClick(id);
   }
-
-  const backgroundImage = memberWhoCompletes ? getProfileImage(memberWhoCompletes) : '';
+  
+  const {
+    profileBackgroundColor: backgroundColor,
+    profileImage: backgroundImage
+  } = getProfileImage(memberWhoCompletes);
 
   return (
     <div style={{
@@ -70,9 +107,6 @@ const BingoCell = (props: BingoCellProps) => {
           backgroundRepeat: 'no-repeat',
         }}
       >
-        {/* <p style={{ margin: 0 }}>{id}</p>
-        <p style={{ margin: 0 }}>{icon}</p>
-        <p style={{ margin: 0 }}>{description}</p> */}
       </div>
     </div>
   );

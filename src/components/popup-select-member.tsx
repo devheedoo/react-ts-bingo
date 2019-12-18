@@ -55,19 +55,20 @@ const PopupSelectMember = (props: PopupSelectMemberProps) => {
       style={popupDivStyle}
       onClick={handleClickDimDev}
     >
-      <div style={{
-        width: '1100px',
-        height: '350px',
-        backgroundColor: 'white',
-        borderRadius: '20px',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        flexWrap: 'wrap',
-      }}
-      onClick={(event) => { console.log('CLICK: popup div'); event.stopPropagation(); }}
+      <div
+        style={{
+          width: '1100px',
+          height: '350px',
+          backgroundColor: 'white',
+          borderRadius: '20px',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          flexWrap: 'wrap',
+        }}
+        onClick={(event) => { event.stopPropagation(); }}
       >
-        {players.map((player: Player, index: number) => {
+        {players.map((player: Player) => {
           return (
             <PosedButton style={{ width: '150px', height: '150px' }}
               onClick={handleClickPlayer}>
@@ -75,6 +76,21 @@ const PopupSelectMember = (props: PopupSelectMemberProps) => {
             </PosedButton>
           );
         })}
+        <PosedButton style={{ width: '150px', height: '150px' }}
+          onClick={handleClickDimDev}>
+          <div style={{
+            height: '150px',
+            width: '150px',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            fontFamily: 'sans-serif',
+            fontWeight: 'bold',
+            fontSize: '30px',
+          }}>
+            취 소
+          </div>
+        </PosedButton>
       </div>
     </div>
   );
@@ -88,15 +104,9 @@ const posedPopup = posed.div({
 const PosedButton = posed.div({
   hoverable: true,
   pressable: true,
-  init: {
-    scale: 1,
-  },
-  hover: {
-    scale: 1.4,
-  },
-  press: {
-    scale: 1.1,
-  }
+  init: { scale: 1, },
+  hover: { scale: 1.4, },
+  press: { scale: 1.1, },
 });
 
 export default PopupSelectMember;

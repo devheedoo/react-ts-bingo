@@ -64,34 +64,28 @@ const App = () => {
   }
 
   const handleClickBingoCell = (id: number) => {
-    console.log(`handleClickBingoCell called`);
+    setBingo({
+      ...bingo,
+      clickedBingoItemId: id,
+    });
+  }
+
+  const handleClickPopupSelectMember = (memberId: PlayerId) => {
+    console.log(`bingo.clickedBingoItemId: ${bingo.clickedBingoItemId}`);
     const newBingoData: BingoItem[] = bingo.bingoData.map(bingoItem => {
-      return bingoItem.id === id ? { ...bingoItem, isComplete: true } : bingoItem;
+      return bingoItem.id === bingo.clickedBingoItemId
+        ? { ...bingoItem, isComplete: true, memberWhoCompletes: memberId }
+        : bingoItem;
     })
     const newBingoLines = checkBingoLines(newBingoData, bingo.bingoLines);
     const newBingoCount = newBingoLines.filter(bingoLine => bingoLine.isBingo).length;
-
+    
     setBingo({
       bingoData: newBingoData,
       bingoLines: newBingoLines,
       bingoCount: newBingoCount,
-      clickedBingoItemId: id,
-    });
-    console.log(bingo);
-  }
-
-  const handleClickPopupSelectMember = (memberId: PlayerId) => {
-    // set bingo cell data memberId
-    bingo.bingoData.map(bingoItem => {
-      if (bingoItem.id === bingo.clickedBingoItemId) {
-        bingoItem.memberWhoCompletes = memberId;
-      }
-    })
-    setBingo({
-      ...bingo,
       clickedBingoItemId: 0,
-    })
-    closePopupSelectMember();
+    });
   }
 
   const handleClickPopupSelectMemberDimDiv = (isBingoCellClicked: boolean) => {
@@ -219,7 +213,5 @@ const checkBingoLines = (bingoList: BingoItem[], bingoLines: BingoLine[]): Bingo
   })
   return newBingoLines;
 }
-
-
 
 export default App;
