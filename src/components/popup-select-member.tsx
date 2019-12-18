@@ -7,17 +7,17 @@ interface PopupSelectMemberProps {
   // playerId: string;
   onClickPlayer: any;
   onClickDimDiv: any;
-  show: boolean;
+  clickedBingoItemId: number;
 }
 
 const PopupSelectMember = (props: PopupSelectMemberProps) => {
-  const {show} = props;
+  const {clickedBingoItemId} = props;
   const [showPopup, setShowPopup] = useState(true);
 
   useEffect(() => {
-    setShowPopup(props.show);
+    setShowPopup(props.clickedBingoItemId > 0);
     console.log('useEffect!');
-  }, [props.show])
+  }, [props.clickedBingoItemId])
 
   const handleClickPlayer = (event: React.MouseEvent) => {
     console.log('handleClickPlayer()');
@@ -25,10 +25,10 @@ const PopupSelectMember = (props: PopupSelectMemberProps) => {
     const $target = event.target as HTMLDivElement;
     if ($target.localName === 'div') {
       // @ts-ignore
-      console.log($target.firstChild.id);
+      props.onClickPlayer($target.firstChild.id);
     } else if ($target.localName === 'img') {
       // @ts-ignore
-      console.log(event.target.id);
+      props.onClickPlayer($target.id);
     }
   }
 
@@ -47,7 +47,7 @@ const PopupSelectMember = (props: PopupSelectMemberProps) => {
     backgroundColor: 'rgba(0,0,0,0.5)',
     justifyContent: 'center',
     alignItems: 'center',
-    display: show && showPopup ? 'flex' : 'none',
+    display: clickedBingoItemId > 0 && showPopup ? 'flex' : 'none',
   } as React.CSSProperties;
 
   return(

@@ -39,7 +39,7 @@ const App = () => {
     bingoData: BingoData,
     bingoLines: BingoLines,
     bingoCount: 0,
-    isBingoCellClicked: false,
+    clickedBingoItemId: 0,
   });
   const [history, setHistory] = useState([]);
 
@@ -59,7 +59,7 @@ const App = () => {
       bingoData: newBingoData,
       bingoLines: newBingoLines,
       bingoCount: newBingoCount,
-      isBingoCellClicked: bingo.isBingoCellClicked,
+      clickedBingoItemId: bingo.clickedBingoItemId,
     });
   }
 
@@ -75,14 +75,22 @@ const App = () => {
       bingoData: newBingoData,
       bingoLines: newBingoLines,
       bingoCount: newBingoCount,
-      isBingoCellClicked: true,
+      clickedBingoItemId: id,
     });
     console.log(bingo);
   }
 
-  const handleClickPopupSelectMember = (memberId: string) => {
+  const handleClickPopupSelectMember = (memberId: PlayerId) => {
     // set bingo cell data memberId
-    
+    bingo.bingoData.map(bingoItem => {
+      if (bingoItem.id === bingo.clickedBingoItemId) {
+        bingoItem.memberWhoCompletes = memberId;
+      }
+    })
+    setBingo({
+      ...bingo,
+      clickedBingoItemId: 0,
+    })
     closePopupSelectMember();
   }
 
@@ -93,7 +101,7 @@ const App = () => {
   const closePopupSelectMember = () => {
     setBingo({
       ...bingo,
-      isBingoCellClicked: false,
+      clickedBingoItemId: 0,
     });
   }
 
@@ -162,7 +170,7 @@ const App = () => {
       <PopupSelectMember
         onClickPlayer={handleClickPopupSelectMember}
         onClickDimDiv={handleClickPopupSelectMemberDimDiv}
-        show={bingo.isBingoCellClicked}
+        clickedBingoItemId={bingo.clickedBingoItemId}
       />
     </div>
   );
