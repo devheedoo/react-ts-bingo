@@ -12,6 +12,20 @@ import BingoCount7Image from '../images/bingo_count_7.png';
 import BingoCount8Image from '../images/bingo_count_8.png';
 import BingoCount9Image from '../images/bingo_count_9.png';
 
+import DarkDragonImage from '../images/dark_dragon.png';
+import DarkFairyImage from '../images/dark_fairy.png';
+import DarkJackolanternImage from '../images/dark_jackolantern.png';
+import FireHargImage from '../images/fire_harg.png';
+import LightCoboldbomberImage from '../images/light_coboldbomber.png';
+import LightKungfugirlImage from '../images/light_kungfugirl.png';
+import LightVampireImage from '../images/light_vampire.png';
+import WaterAssassinImage from '../images/water_assassin.png';
+import WaterEpikionpriestImage from '../images/water_epikionpriest.png';
+import WaterNinjaImage from '../images/water_ninja.png';
+import WindBeastmonkImage from '../images/wind_beastmonk.png';
+import WindPandawarriorImage from '../images/wind_pandawarrior.png';
+import WindUnicornImage from '../images/wind_unicorn.png';
+
 interface PopupSelectMemberProps {
   // playerId: string;
   onClickPlayer: any;
