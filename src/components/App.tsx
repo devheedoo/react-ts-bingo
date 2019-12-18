@@ -80,10 +80,20 @@ const App = () => {
     console.log(bingo);
   }
 
+  const handleClickPopupSelectMember = (memberId: string) => {
+    // set bingo cell data memberId
+    
+    closePopupSelectMember();
+  }
+
   const handleClickPopupSelectMemberDimDiv = (isBingoCellClicked: boolean) => {
+    closePopupSelectMember();
+  }
+
+  const closePopupSelectMember = () => {
     setBingo({
       ...bingo,
-      isBingoCellClicked: isBingoCellClicked,
+      isBingoCellClicked: false,
     });
   }
 
@@ -150,7 +160,7 @@ const App = () => {
         </div>
       </div>
       <PopupSelectMember
-        onClickPlayer={() => {}}
+        onClickPlayer={handleClickPopupSelectMember}
         onClickDimDiv={handleClickPopupSelectMemberDimDiv}
         show={bingo.isBingoCellClicked}
       />

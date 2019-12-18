@@ -75,19 +75,6 @@ const PopupSelectMember = (props: PopupSelectMemberProps) => {
             </PosedButton>
           );
         })}
-        {/* <PosedButton style={{ width: '80px', height: '80px' }}
-          onClick={handleClickPlayer}>
-          <img id={'player0'} src={DarkDragonImage} style={{ height: '80px' }} />
-        </PosedButton>
-        <PosedButton style={{ width: '80px', height: '80px' }}>
-        <img src={DarkFairyImage} style={{ height: '80px' }} />
-        </PosedButton>
-        <PosedButton style={{ width: '80px', height: '80px' }}>
-        <img src={BingoCount2Image} style={{ height: '80px' }} />
-        </PosedButton>
-        <PosedButton style={{ width: '80px', height: '80px' }}>
-        <img src={BingoCount3Image} style={{ height: '80px' }} />
-        </PosedButton> */}
       </div>
     </div>
   );

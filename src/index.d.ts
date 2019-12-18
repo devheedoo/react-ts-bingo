@@ -5,10 +5,9 @@ interface BingoProps {
 
 interface BingoItem {
   id: number;
-  icon: string;
-  description: string;
   isComplete: boolean;
   isBingo: boolean;
+  memberWhoCompletes: PlayerId | undefined;
 }
 
 interface BingoCellProps {

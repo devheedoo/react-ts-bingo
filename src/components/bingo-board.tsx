@@ -26,7 +26,7 @@ const BingoBoard = (props: BingoProps) => {
 }
 
 const BingoCell = (props: BingoCellProps) => {
-  const {id, icon, description, isComplete, isBingo} = props.bingoItem;
+  const {id, isComplete, isBingo, memberWhoCompletes} = props.bingoItem;
   const backgroundColor = isBingo ? 'red' : isComplete ? COLOR_BRIGHT_YELLOW : 'white';
 
   const handleClick = () => {
