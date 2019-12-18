@@ -80,10 +80,10 @@ const App = () => {
     console.log(bingo);
   }
 
-  const showPopupSelectMember = () => {
+  const handleClickPopupSelectMemberDimDiv = (isBingoCellClicked: boolean) => {
     setBingo({
       ...bingo,
-      isBingoCellClicked: false,
+      isBingoCellClicked: isBingoCellClicked,
     });
   }
 
