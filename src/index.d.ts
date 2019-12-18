@@ -45,3 +45,24 @@ declare module "*.png" {
   const value: any;
   export = value;
 }
+
+type PlayerId = 
+ | 'Amd'
+ | 'Bitter'
+ | 'Choco'
+ | 'Cube'
+ | 'Darkkom'
+ | 'Giveme'
+ | 'Guri'
+ | 'Gyul'
+ | 'Haedal'
+ | 'Hichu'
+ | 'Kkasi'
+ | 'Penguin'
+ | 'Wonang';
+
+interface Player {
+  id: PlayerId,
+  fullImage: any;
+  profileImage: any;
+}

@@ -1,30 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import posed from 'react-pose';
 
-import BingoCount0Image from '../images/bingo_count_0.png';
-import BingoCount1Image from '../images/bingo_count_1.png';
-import BingoCount2Image from '../images/bingo_count_2.png';
-import BingoCount3Image from '../images/bingo_count_3.png';
-import BingoCount4Image from '../images/bingo_count_4.png';
-import BingoCount5Image from '../images/bingo_count_5.png';
-import BingoCount6Image from '../images/bingo_count_6.png';
-import BingoCount7Image from '../images/bingo_count_7.png';
-import BingoCount8Image from '../images/bingo_count_8.png';
-import BingoCount9Image from '../images/bingo_count_9.png';
-
-import DarkDragonImage from '../images/dark_dragon.png';
-import DarkFairyImage from '../images/dark_fairy.png';
-import DarkJackolanternImage from '../images/dark_jackolantern.png';
-import FireHargImage from '../images/fire_harg.png';
-import LightCoboldbomberImage from '../images/light_coboldbomber.png';
-import LightKungfugirlImage from '../images/light_kungfugirl.png';
-import LightVampireImage from '../images/light_vampire.png';
-import WaterAssassinImage from '../images/water_assassin.png';
-import WaterEpikionpriestImage from '../images/water_epikionpriest.png';
-import WaterNinjaImage from '../images/water_ninja.png';
-import WindBeastmonkImage from '../images/wind_beastmonk.png';
-import WindPandawarriorImage from '../images/wind_pandawarrior.png';
-import WindUnicornImage from '../images/wind_unicorn.png';
+import players from './Players';
 
 interface PopupSelectMemberProps {
   // playerId: string;
@@ -44,8 +21,15 @@ const PopupSelectMember = (props: PopupSelectMemberProps) => {
 
   const handleClickPlayer = (event: React.MouseEvent) => {
     console.log('handleClickPlayer()');
-    // @ts-ignore
-    console.log(event.target.id);
+    console.log(event.target);
+    const $target = event.target as HTMLDivElement;
+    if ($target.localName === 'div') {
+      // @ts-ignore
+      console.log($target.firstChild.id);
+    } else if ($target.localName === 'img') {
+      // @ts-ignore
+      console.log(event.target.id);
+    }
   }
 
   const handleClickDimDev = () => {
@@ -72,29 +56,38 @@ const PopupSelectMember = (props: PopupSelectMemberProps) => {
       onClick={handleClickDimDev}
     >
       <div style={{
-        width: '700px',
-        height: '200px',
+        width: '1100px',
+        height: '350px',
         backgroundColor: 'white',
         borderRadius: '20px',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
+        flexWrap: 'wrap',
       }}
       onClick={(event) => { console.log('CLICK: popup div'); event.stopPropagation(); }}
       >
-        <PosedButton style={{ width: '80px', height: '80px' }}
+        {players.map((player: Player, index: number) => {
+          return (
+            <PosedButton style={{ width: '150px', height: '150px' }}
+              onClick={handleClickPlayer}>
+              <img id={player.id} src={player.fullImage} style={{ height: '150px' }} />
+            </PosedButton>
+          );
+        })}
+        {/* <PosedButton style={{ width: '80px', height: '80px' }}
           onClick={handleClickPlayer}>
-          <img id={'player0'} src={BingoCount0Image} style={{ height: '80px' }} />
+          <img id={'player0'} src={DarkDragonImage} style={{ height: '80px' }} />
         </PosedButton>
         <PosedButton style={{ width: '80px', height: '80px' }}>
-        <img src={BingoCount1Image} style={{ height: '80px' }} />
+        <img src={DarkFairyImage} style={{ height: '80px' }} />
         </PosedButton>
         <PosedButton style={{ width: '80px', height: '80px' }}>
         <img src={BingoCount2Image} style={{ height: '80px' }} />
         </PosedButton>
         <PosedButton style={{ width: '80px', height: '80px' }}>
         <img src={BingoCount3Image} style={{ height: '80px' }} />
-        </PosedButton>
+        </PosedButton> */}
       </div>
     </div>
   );
@@ -112,10 +105,10 @@ const PosedButton = posed.div({
     scale: 1,
   },
   hover: {
-    scale: 1.2,
+    scale: 1.4,
   },
   press: {
-    scale: 1,
+    scale: 1.1,
   }
 });
 
