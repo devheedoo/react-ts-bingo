@@ -34,6 +34,75 @@ import Summon5WfwButton from './summon-5-wfw';
 import MissionRoulette from './mission-roulette';
 import PopupSelectMember from './popup-select-member';
 
+const secondsPhase1 = Array(20).fill(0.1);
+const secondsPhase2 = Array(10).fill(0.2);
+const secondsPhase3 = Array(3).fill(0.5);
+const randomAnimationSeconds = [
+  ...secondsPhase1,
+  ...secondsPhase2,
+  ...secondsPhase3,
+]
+
+const turnOffTargetOnNext = (
+  turnOffFunc: any,
+  turnOnFunc: any,
+  currentIndex: number,
+  nextIndex: number,
+  seconds: number,
+) => {
+  setTimeout(() => {
+    console.log(`turnOn ${nextIndex} at ${seconds}`);
+    turnOffFunc(currentIndex);
+    turnOnFunc(nextIndex);
+  }, seconds * 1000);
+}
+
+const turnOn = (index: number) => { console.log(`turnOn:${index}`); }
+const turnOff = (index: number) => { console.log(`turnOff:${index}`); }
+
+const getNextIndex = (
+  list: any[],
+  currentIndex: number,
+): number => {
+  if (list.length === currentIndex + 1) {
+    return 0;
+  } else {
+    return currentIndex + 1;
+  }
+}
+
+const callSequentially = (
+  iteratingSequence: any[],
+  targetIndex: number,
+) => {
+  let accumulatorInSecond: number = 0;
+  let currentIndex: number = 0;
+  let nextIndex: number = 0;
+
+  // 0-2초: 0.1초씩 돌아가고
+  turnOn(iteratingSequence[currentIndex]);
+  while(accumulatorInSecond < 2) {
+    nextIndex = getNextIndex(iteratingSequence, currentIndex);
+    accumulatorInSecond = accumulatorInSecond + 0.1;
+    turnOffTargetOnNext(turnOff, turnOn, currentIndex, nextIndex, accumulatorInSecond);
+    currentIndex = nextIndex;
+  }
+  // 2-4초: 0.2초씩 돌아가고
+  while(accumulatorInSecond < 4) {
+    nextIndex = getNextIndex(iteratingSequence, currentIndex);
+    accumulatorInSecond = accumulatorInSecond + 0.2;
+    turnOffTargetOnNext(turnOff, turnOn, currentIndex, nextIndex, accumulatorInSecond);
+    currentIndex = nextIndex;
+  }
+  // 4초~: 타겟 도달할 때까지 0.5초씩 돌아가고
+  while(currentIndex !== targetIndex) {
+    nextIndex = getNextIndex(iteratingSequence, currentIndex);
+    accumulatorInSecond = accumulatorInSecond + 0.5;
+    turnOffTargetOnNext(turnOff, turnOn, currentIndex, nextIndex, accumulatorInSecond);
+    currentIndex = nextIndex;
+  }
+}
+
 const App = () => {
   const [bingo, setBingo] = useState<AppState>({
     bingoData: BingoData,
@@ -82,18 +151,17 @@ const App = () => {
     const {completeType} = bingo;
     if (completeType && completeType === 'SUMMON_5_WFW') {
       // Random Cell Animation
+      // input: seconds list, rotating bingo cell list, target bingo cell id
+
     }
 
     let newBingoData: BingoItem[] = bingo.bingoData;
     if (completeType && completeType === 'SUMMON_5_LD') {
       // Random Line Animation
-      // 임의의 셀 id로 여기까지 로직 넘어온 다음
-      // bingoLine 중 셀 id가 포함된 line을 가로/세로/대각선 중 랜덤으로 선택
       const cellId = bingo.clickedBingoItemId;
       const randomBingoLines = BingoLines.filter(bingoLine => bingoLine.indexes.includes(cellId));
       const randomIndex = Math.floor(Math.random() * randomBingoLines.length);
       const randomBingoLineCellIds = randomBingoLines[randomIndex].indexes;
-      // 그럼 아래 newBingoData 처리 부분도 달라짐
       newBingoData = bingo.bingoData.map(bingoItem => {
         if (
           randomBingoLineCellIds.includes(bingoItem.id) &&
@@ -138,6 +206,7 @@ const App = () => {
 
   useEffect(() => {
     console.log('RENDER!');
+    callSequentially(bingo.bingoData, 21);
   });
 
   return (
