@@ -34,15 +34,6 @@ import Summon5WfwButton from './summon-5-wfw';
 import MissionRoulette from './mission-roulette';
 import PopupSelectMember from './popup-select-member';
 
-const secondsPhase1 = Array(20).fill(0.1);
-const secondsPhase2 = Array(10).fill(0.2);
-const secondsPhase3 = Array(3).fill(0.5);
-const randomAnimationSeconds = [
-  ...secondsPhase1,
-  ...secondsPhase2,
-  ...secondsPhase3,
-]
-
 const turnOffTargetOnNext = (
   turnOffFunc: any,
   turnOnFunc: any,
@@ -57,8 +48,13 @@ const turnOffTargetOnNext = (
   }, seconds * 1000);
 }
 
-const turnOn = (index: number) => { console.log(`turnOn:${index}`); }
-const turnOff = (index: number) => { console.log(`turnOff:${index}`); }
+const turnOn = (index: number) => {
+  console.log(`turnOn:${index}`);
+}
+
+const turnOff = (index: number) => {
+  console.log(`turnOff:${index}`);
+}
 
 const getNextIndex = (
   list: any[],
@@ -72,6 +68,8 @@ const getNextIndex = (
 }
 
 const callSequentially = (
+  turnOnFunc: any,
+  turnOffFunc: any,
   iteratingSequence: any[],
   targetIndex: number,
 ) => {
@@ -80,25 +78,25 @@ const callSequentially = (
   let nextIndex: number = 0;
 
   // 0-2초: 0.1초씩 돌아가고
-  turnOn(iteratingSequence[currentIndex]);
+  turnOnFunc(iteratingSequence[currentIndex]);
   while(accumulatorInSecond < 2) {
     nextIndex = getNextIndex(iteratingSequence, currentIndex);
     accumulatorInSecond = accumulatorInSecond + 0.1;
-    turnOffTargetOnNext(turnOff, turnOn, currentIndex, nextIndex, accumulatorInSecond);
+    turnOffTargetOnNext(turnOffFunc, turnOnFunc, currentIndex, nextIndex, accumulatorInSecond);
     currentIndex = nextIndex;
   }
   // 2-4초: 0.2초씩 돌아가고
   while(accumulatorInSecond < 4) {
     nextIndex = getNextIndex(iteratingSequence, currentIndex);
     accumulatorInSecond = accumulatorInSecond + 0.2;
-    turnOffTargetOnNext(turnOff, turnOn, currentIndex, nextIndex, accumulatorInSecond);
+    turnOffTargetOnNext(turnOffFunc, turnOnFunc, currentIndex, nextIndex, accumulatorInSecond);
     currentIndex = nextIndex;
   }
   // 4초~: 타겟 도달할 때까지 0.5초씩 돌아가고
   while(currentIndex !== targetIndex) {
     nextIndex = getNextIndex(iteratingSequence, currentIndex);
     accumulatorInSecond = accumulatorInSecond + 0.5;
-    turnOffTargetOnNext(turnOff, turnOn, currentIndex, nextIndex, accumulatorInSecond);
+    turnOffTargetOnNext(turnOffFunc, turnOnFunc, currentIndex, nextIndex, accumulatorInSecond);
     currentIndex = nextIndex;
   }
 }
@@ -204,9 +202,13 @@ const App = () => {
     });
   }
 
+  const turnOnBingoCell = (id: number) => {
+    
+  }
+
   useEffect(() => {
     console.log('RENDER!');
-    callSequentially(bingo.bingoData, 21);
+    callSequentially(turnOn, turnOff, bingo.bingoData, 21);
   });
 
   return (

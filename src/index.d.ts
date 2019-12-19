@@ -16,6 +16,7 @@ interface BingoItem {
   isComplete: boolean;
   isBingo: boolean;
   memberWhoCompletes: PlayerId | undefined;
+  isHighlighted: boolean;
 }
 
 interface BingoCellProps {
