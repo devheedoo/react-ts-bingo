@@ -1,3 +1,11 @@
+interface AppState {
+  bingoData: BingoItem[];
+  bingoLines: BingoLine[];
+  bingoCount: number;
+  clickedBingoItemId: number;
+  completeType?: CompleteType;
+}
+
 interface BingoProps {
   bingoData: BingoItem[];
   onClickCell: (id: number) => void;
@@ -45,6 +53,8 @@ declare module "*.png" {
   export = value;
 }
 
+type CompleteType = 'MISSION_CLEAR' | 'SUMMON_5_LD' | 'SUMMON_5_WFW';
+
 type PlayerId = 
  | 'Amd'
  | 'Bitter'
@@ -64,4 +74,8 @@ interface Player {
   id: PlayerId,
   fullImage: any;
   profileImage: any;
+}
+
+interface SummonButtonProps {
+  onSummon: () => void;
 }

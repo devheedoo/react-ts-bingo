@@ -5,7 +5,12 @@ import posed from 'react-pose';
 
 import Summon5WfwImage from '../images/summon_5_wfw.png';
 
-const Summon5WfwButton = () => {
+
+const Summon5WfwButton = (props: SummonButtonProps) => {
+  const handleClick = () => {
+    props.onSummon();
+  }
+
   const imgStyle = {
     width: '200px',
     height: 'auto',
@@ -18,6 +23,7 @@ const Summon5WfwButton = () => {
         background: 'none',
         border: 'none',
       }}
+      onClick={handleClick}
     >
       <img
         src={Summon5WfwImage}

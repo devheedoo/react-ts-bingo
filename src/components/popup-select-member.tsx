@@ -5,8 +5,8 @@ import players from './Players';
 
 interface PopupSelectMemberProps {
   // playerId: string;
-  onClickPlayer: any;
-  onClickDimDiv: any;
+  onClickPlayer: (memberId: PlayerId) => void;
+  onClickDimDiv: () => void;
   clickedBingoItemId: number;
 }
 
@@ -16,12 +16,9 @@ const PopupSelectMember = (props: PopupSelectMemberProps) => {
 
   useEffect(() => {
     setShowPopup(props.clickedBingoItemId > 0);
-    console.log('useEffect!');
   }, [props.clickedBingoItemId])
 
   const handleClickPlayer = (event: React.MouseEvent) => {
-    console.log('handleClickPlayer()');
-    console.log(event.target);
     const $target = event.target as HTMLDivElement;
     if ($target.localName === 'div') {
       // @ts-ignore
@@ -35,7 +32,7 @@ const PopupSelectMember = (props: PopupSelectMemberProps) => {
   const handleClickDimDev = () => {
     console.log('CLICK: dim div');
     setShowPopup(false);
-    props.onClickDimDiv(false);
+    props.onClickDimDiv();
   }
 
   const popupDivStyle = {

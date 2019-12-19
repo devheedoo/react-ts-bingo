@@ -5,7 +5,11 @@ import posed from 'react-pose';
 
 import Summon5LdImage from '../images/summon_5_ld.png';
 
-const Summon5LdButton = () => {
+const Summon5LdButton = (props: SummonButtonProps) => {
+  const handleClick = () => {
+    props.onSummon();
+  }
+
   const imgStyle = {
     width: '200px',
     height: 'auto',
@@ -19,6 +23,7 @@ const Summon5LdButton = () => {
         border: 'none',
         marginTop: '50px'
       }}
+      onClick={handleClick}
     >
       <img
         src={Summon5LdImage}

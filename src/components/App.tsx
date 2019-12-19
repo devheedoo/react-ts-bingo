@@ -35,31 +35,38 @@ import MissionRoulette from './mission-roulette';
 import PopupSelectMember from './popup-select-member';
 
 const App = () => {
-  const [bingo, setBingo] = useState({
+  const [bingo, setBingo] = useState<AppState>({
     bingoData: BingoData,
     bingoLines: BingoLines,
     bingoCount: 0,
     clickedBingoItemId: 0,
+    completeType: undefined,
   });
   const [history, setHistory] = useState([]);
 
-  const handleClickRouletteButton = () => {
+  const handleClickSummon5WfwButton = () => {
     const randomBingoItemId: number = getRandomIncompleteBingoItemId(bingo.bingoData);
     if (randomBingoItemId === -1) {
       console.log(`No incomplete item remains`);
       return;
     }
-    const newBingoData: BingoItem[] = bingo.bingoData.map(bingoItem => {
-      return bingoItem.id === randomBingoItemId ? { ...bingoItem, isComplete: true } : bingoItem;
-    })
-    const newBingoLines = checkBingoLines(newBingoData, bingo.bingoLines);
-    const newBingoCount = newBingoLines.filter(bingoLine => bingoLine.isBingo).length;
-
     setBingo({
-      bingoData: newBingoData,
-      bingoLines: newBingoLines,
-      bingoCount: newBingoCount,
-      clickedBingoItemId: bingo.clickedBingoItemId,
+      ...bingo,
+      clickedBingoItemId: randomBingoItemId,
+      completeType: 'SUMMON_5_WFW',
+    });
+  }
+
+  const handleClickSummon5LdButton = () => {
+    const randomBingoItemId: number = getRandomIncompleteBingoItemId(bingo.bingoData);
+    if (randomBingoItemId === -1) {
+      console.log(`No incomplete item remains`);
+      return;
+    }
+    setBingo({
+      ...bingo,
+      clickedBingoItemId: randomBingoItemId,
+      completeType: 'SUMMON_5_LD',
     });
   }
 
@@ -67,16 +74,44 @@ const App = () => {
     setBingo({
       ...bingo,
       clickedBingoItemId: id,
+      completeType: 'MISSION_CLEAR',
     });
   }
 
   const handleClickPopupSelectMember = (memberId: PlayerId) => {
-    console.log(`bingo.clickedBingoItemId: ${bingo.clickedBingoItemId}`);
-    const newBingoData: BingoItem[] = bingo.bingoData.map(bingoItem => {
-      return bingoItem.id === bingo.clickedBingoItemId
-        ? { ...bingoItem, isComplete: true, memberWhoCompletes: memberId }
-        : bingoItem;
-    })
+    const {completeType} = bingo;
+    if (completeType && completeType === 'SUMMON_5_WFW') {
+      // Random Cell Animation
+    }
+
+    let newBingoData: BingoItem[] = bingo.bingoData;
+    if (completeType && completeType === 'SUMMON_5_LD') {
+      // Random Line Animation
+      // 임의의 셀 id로 여기까지 로직 넘어온 다음
+      // bingoLine 중 셀 id가 포함된 line을 가로/세로/대각선 중 랜덤으로 선택
+      const cellId = bingo.clickedBingoItemId;
+      const randomBingoLines = BingoLines.filter(bingoLine => bingoLine.indexes.includes(cellId));
+      const randomIndex = Math.floor(Math.random() * randomBingoLines.length);
+      const randomBingoLineCellIds = randomBingoLines[randomIndex].indexes;
+      // 그럼 아래 newBingoData 처리 부분도 달라짐
+      newBingoData = bingo.bingoData.map(bingoItem => {
+        if (
+          randomBingoLineCellIds.includes(bingoItem.id) &&
+          !bingoItem.isComplete
+        ) {
+          return { ...bingoItem, isComplete: true, memberWhoCompletes: memberId };
+        } else {
+          return bingoItem;
+        }
+      })
+    } else {
+      newBingoData = bingo.bingoData.map(bingoItem => {
+        return bingoItem.id === bingo.clickedBingoItemId
+          ? { ...bingoItem, isComplete: true, memberWhoCompletes: memberId }
+          : bingoItem;
+      });
+    }
+
     const newBingoLines = checkBingoLines(newBingoData, bingo.bingoLines);
     const newBingoCount = newBingoLines.filter(bingoLine => bingoLine.isBingo).length;
     
@@ -85,10 +120,11 @@ const App = () => {
       bingoLines: newBingoLines,
       bingoCount: newBingoCount,
       clickedBingoItemId: 0,
+      completeType: undefined,
     });
   }
 
-  const handleClickPopupSelectMemberDimDiv = (isBingoCellClicked: boolean) => {
+  const handleClickPopupSelectMemberDimDiv = () => {
     closePopupSelectMember();
   }
 
@@ -96,6 +132,7 @@ const App = () => {
     setBingo({
       ...bingo,
       clickedBingoItemId: 0,
+      completeType: undefined,
     });
   }
 
@@ -149,8 +186,8 @@ const App = () => {
             // backgroundColor: 'lightblue',
           }}>
             <BingoCountBoard bingoCount={bingo.bingoCount} />
-            <Summon5LdButton />
-            <Summon5WfwButton />
+            <Summon5LdButton onSummon={handleClickSummon5LdButton} />
+            <Summon5WfwButton onSummon={handleClickSummon5WfwButton} />
           </div>
           <div style={{
             width: '300px',
