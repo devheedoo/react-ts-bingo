@@ -5,33 +5,18 @@ import RouletteButtonImage from '../images/roulette_button.png';
 import RouletteCoverImage from '../images/roulette_cover.png';
 import RouletteFrameImage from '../images/roulette_frame.png';
 
-const LENGTH = 9;
+const LENGTH = 10;
 
 const MissionRoulette = () => {
-  const [hovering, setHovering] = useState('idle');
-  const [isHovered, setHovered] = useState(false);
-  const [isPressed, setPressed] = useState(false);
   const [missionIndex, setMissionIndex] = useState('0');
 
-  let poseState = 'missionA';
   const spinRoulette = () => {
     if (missionIndex.includes('d')) {
       setMissionIndex((Math.floor(Math.random() * LENGTH)).toString());
     } else {
       setMissionIndex((Math.floor(Math.random() * LENGTH)).toString() + 'd');
     }
-    console.log(missionIndex);
   }
-
-  const buttonStyle = {
-    position: 'absolute',
-    width: '300px',
-    top: '20px',
-    left: 0,
-  } as React.CSSProperties;
-// 22 -8 -38 
-
-  // useEffect(() => console.log(`Render MissionRoulette`));
 
   return (
     <div style={{
@@ -44,7 +29,6 @@ const MissionRoulette = () => {
           height: 'auto',
           marginTop: '20px',
           filter: 'drop-shadow(0px 5px 10px #000)',
-          // boxShadow: '0px 5px 10px rgba(0,0,0,0.8)'
         }}
       />
       <div
@@ -59,7 +43,6 @@ const MissionRoulette = () => {
       >
         <MissionList
           pose={'mission' + missionIndex}
-          // missionIndex={missionIndex}
           style={{
             listStyle: 'none',
             margin: 0,
@@ -73,55 +56,61 @@ const MissionRoulette = () => {
           }}
           // 15장 연속 노번개
         >
-          <li>암속성 아누비스 (서머유일광역낙인러)</li>
           <li>비스트 라이더 (신규몬스터/속성무관)</li>
           <li>나의 최애 몬스터 (단톡방설문기준)</li>
-          <li>번개 연속 3회 (속성무관)</li>
-          <li>풍속성 부메랑전사 (지금영던/각성포함)</li>
-          <li>빛/암 번개 (영던/각성포함)</li>
-          <li>빛/암 노번개</li>
+          <li>15장 연속 노번쩍</li>
+          <li>번쩍 연속 2회 (속성무관)</li>
+          <li>번쩍 연속 3회 (속성무관)</li>
+          <li>흑백 번쩍 (영던/각성포함)</li>
+          <li>흑빽 노번쩍</li>
+          <li>3속성 번쩍</li>
+          <li>바람의 부메랑전사 (12월영던/각성포함)</li>
           <li>잭-오-랜턴 (속성무관/각성포함)</li>
-          <li>A, B, C (3성 실시간 아레나 MVP 몬스터)</li>
 
-          <li>암속성 아누비스 (서머유일광역낙인러)</li>
           <li>비스트 라이더 (신규몬스터/속성무관)</li>
           <li>나의 최애 몬스터 (단톡방설문기준)</li>
-          <li>번개 연속 3회 (속성무관)</li>
-          <li>풍속성 부메랑전사 (지금영던/각성포함)</li>
-          <li>빛/암 번개 (영던/각성포함)</li>
-          <li>빛/암 노번개</li>
+          <li>15장 연속 노번쩍</li>
+          <li>번쩍 연속 2회 (속성무관)</li>
+          <li>번쩍 연속 3회 (속성무관)</li>
+          <li>흑백 번쩍 (영던/각성포함)</li>
+          <li>흑빽 노번쩍</li>
+          <li>3속성 번쩍</li>
+          <li>바람의 부메랑전사 (12월영던/각성포함)</li>
           <li>잭-오-랜턴 (속성무관/각성포함)</li>
-          <li>A, B, C (3성 실시간 아레나 MVP 몬스터)</li>
-          
-          <li>암속성 아누비스 (서머유일광역낙인러)</li>
-          <li>비스트 라이더 (신규몬스터/속성무관)</li>
-          <li>나의 최애 몬스터 (단톡방설문기준)</li>
-          <li>번개 연속 3회 (속성무관)</li>
-          <li>풍속성 부메랑전사 (지금영던/각성포함)</li>
-          <li>빛/암 번개 (영던/각성포함)</li>
-          <li>빛/암 노번개</li>
-          <li>잭-오-랜턴 (속성무관/각성포함)</li>
-          <li>A, B, C (3성 실시간 아레나 MVP 몬스터)</li>
 
-          <li>암속성 아누비스 (서머유일광역낙인러)</li>
           <li>비스트 라이더 (신규몬스터/속성무관)</li>
           <li>나의 최애 몬스터 (단톡방설문기준)</li>
-          <li>번개 연속 3회 (속성무관)</li>
-          <li>풍속성 부메랑전사 (지금영던/각성포함)</li>
-          <li>빛/암 번개 (영던/각성포함)</li>
-          <li>빛/암 노번개</li>
+          <li>15장 연속 노번쩍</li>
+          <li>번쩍 연속 2회 (속성무관)</li>
+          <li>번쩍 연속 3회 (속성무관)</li>
+          <li>흑백 번쩍 (영던/각성포함)</li>
+          <li>흑빽 노번쩍</li>
+          <li>3속성 번쩍</li>
+          <li>바람의 부메랑전사 (12월영던/각성포함)</li>
           <li>잭-오-랜턴 (속성무관/각성포함)</li>
-          <li>A, B, C (3성 실시간 아레나 MVP 몬스터)</li>
 
-          <li>암속성 아누비스 (서머유일광역낙인러)</li>
           <li>비스트 라이더 (신규몬스터/속성무관)</li>
           <li>나의 최애 몬스터 (단톡방설문기준)</li>
-          <li>번개 연속 3회 (속성무관)</li>
-          <li>풍속성 부메랑전사 (지금영던/각성포함)</li>
-          <li>빛/암 번개 (영던/각성포함)</li>
-          <li>빛/암 노번개</li>
+          <li>15장 연속 노번쩍</li>
+          <li>번쩍 연속 2회 (속성무관)</li>
+          <li>번쩍 연속 3회 (속성무관)</li>
+          <li>흑백 번쩍 (영던/각성포함)</li>
+          <li>흑빽 노번쩍</li>
+          <li>3속성 번쩍</li>
+          <li>바람의 부메랑전사 (12월영던/각성포함)</li>
           <li>잭-오-랜턴 (속성무관/각성포함)</li>
-          <li>A, B, C (3성 실시간 아레나 MVP 몬스터)</li>
+
+          <li>비스트 라이더 (신규몬스터/속성무관)</li>
+          <li>나의 최애 몬스터 (단톡방설문기준)</li>
+          <li>15장 연속 노번쩍</li>
+          <li>번쩍 연속 2회 (속성무관)</li>
+          <li>번쩍 연속 3회 (속성무관)</li>
+          <li>흑백 번쩍 (영던/각성포함)</li>
+          <li>흑빽 노번쩍</li>
+          <li>3속성 번쩍</li>
+          <li>바람의 부메랑전사 (12월영던/각성포함)</li>
+          <li>잭-오-랜턴 (속성무관/각성포함)</li>
+
         </MissionList>
       </div>
       <img
@@ -143,12 +132,7 @@ const MissionRoulette = () => {
       >
         <img
           src={RouletteButtonImage}
-          style={{ width: '300px',}}
-          // style={buttonStyle}
-          // onMouseEnter={() => setHovered(true)}
-          // onMouseLeave={() => setHovered(false)}
-          // onMouseDown={() => setPressed(true)}
-          // onMouseUp={() => setPressed(false)}
+          style={{ width: '300px' }}
           onClick={spinRoulette}
         />
       </PosedButton>
