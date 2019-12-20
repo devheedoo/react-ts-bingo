@@ -36,7 +36,7 @@ const BingoHighlight = (props: BingoHighlightProps) => {
       incompleteIds.indexOf(targetId)
     );
 
-    if (completedType === 'SUMMON_5_WFW') {
+    if (completedType === 'SUMMON_5_WFW' || completedType === 'SUMMON_5_LD') {
       // 한 칸씩
       const nextId = incompleteIds[getNextIndex(incompleteIds, incompleteIds.indexOf(highlighting.id))];
       if (highlighting.aniTimeAcc < 1000 + 50 * cell50Count) {
@@ -80,8 +80,6 @@ const BingoHighlight = (props: BingoHighlightProps) => {
           aniTimeAcc: 0,
         });
       }
-    } else if (completedType === 'SUMMON_5_LD') {
-      // 한 줄씩
     } else {
       // dark
     }
