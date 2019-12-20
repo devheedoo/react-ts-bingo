@@ -3,6 +3,7 @@ interface AppState {
   bingoLines: BingoLine[];
   bingoCount: number;
   clickedBingoItemId: number;
+  isPopupOpen: boolean;
   completeType?: CompleteType;
   history?: any[];
 }

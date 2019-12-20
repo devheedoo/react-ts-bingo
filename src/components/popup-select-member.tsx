@@ -7,16 +7,16 @@ interface PopupSelectMemberProps {
   // playerId: string;
   onClickPlayer: (memberId: PlayerId) => void;
   onClickDimDiv: () => void;
-  clickedBingoItemId: number;
+  isPopupOpen: boolean;
 }
 
 const PopupSelectMember = (props: PopupSelectMemberProps) => {
-  const {clickedBingoItemId} = props;
+  const {isPopupOpen} = props;
   const [showPopup, setShowPopup] = useState(true);
 
   useEffect(() => {
-    setShowPopup(props.clickedBingoItemId > 0);
-  }, [props.clickedBingoItemId])
+    setShowPopup(isPopupOpen);
+  }, [isPopupOpen])
 
   const handleClickPlayer = (event: React.MouseEvent) => {
     const $target = event.target as HTMLDivElement;
@@ -44,7 +44,7 @@ const PopupSelectMember = (props: PopupSelectMemberProps) => {
     backgroundColor: 'rgba(0,0,0,0.5)',
     justifyContent: 'center',
     alignItems: 'center',
-    display: clickedBingoItemId > 0 && showPopup ? 'flex' : 'none',
+    display: isPopupOpen && showPopup ? 'flex' : 'none',
   } as React.CSSProperties;
 
   return(

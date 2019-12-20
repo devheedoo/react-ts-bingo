@@ -71,6 +71,7 @@ const MissionRoulette = () => {
             width: '294px',
             lineHeight: '30px',
           }}
+          // 15장 연속 노번개
         >
           <li>암속성 아누비스 (서머유일광역낙인러)</li>
           <li>비스트 라이더 (신규몬스터/속성무관)</li>
