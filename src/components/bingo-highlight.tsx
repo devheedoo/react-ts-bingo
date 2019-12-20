@@ -8,7 +8,16 @@ import posed from 'react-pose';
  * output(?): time when highlight sequence ends
  */
 
-const BingoHighlight = () => {
+interface BingoHighlightProps {
+  incompleteIds: number[];
+  targetId: number;
+}
+
+const BingoHighlight = (props: BingoHighlightProps) => {
+  const {incompleteIds, targetId} = props;
+  const startingId = 1;
+  const [highlightingId, setHighlightingId] = useState<number>(startingId);
+  console.log(incompleteIds);
   return (
     <div style={{
       position: 'absolute',
@@ -21,6 +30,9 @@ const BingoHighlight = () => {
       pointerEvents: 'none',
     }}>
       {Array(25).fill(undefined).map((item, index) => {
+        const isHighlighted = incompleteIds.includes(index + 1);
+        const poseState = isHighlighted ? 'light' : 'dark';
+        console.log(poseState);
         return (
           <div style={{
             width: '100px',
@@ -30,11 +42,10 @@ const BingoHighlight = () => {
             alignItems: 'center',
           }}>
             <PosedHighlightBox
-              pose={index % 2 === 0 ? 'light' : 'dark'}
+              pose={poseState}
               style={{
                 width: '80px',
                 height: '80px',
-                display: 'block',
                 backgroundColor: 'rgba(255,255,0,0.3)',
               }}
             />
@@ -45,12 +56,73 @@ const BingoHighlight = () => {
   )
 }
 
+const callSequentially = (
+  turnOnFunc: any,
+  turnOffFunc: any,
+  iteratingSequence: any[], // bingoData.filter(bingoItem => !bingoItem.isComplete)
+  targetIndex: number,  // 1 ~ 25
+) => {
+  let accumulatorInSecond: number = 0;
+  let currentIndex: number = 0;
+  let nextIndex: number = 0;
+
+  // 0-2초: 0.1초씩 돌아가고
+  turnOnFunc(iteratingSequence[currentIndex]);
+  while(accumulatorInSecond < 2) {
+    nextIndex = getNextIndex(iteratingSequence, currentIndex);
+    accumulatorInSecond = accumulatorInSecond + 0.1;
+    turnOffTargetOnNext(turnOffFunc, turnOnFunc, currentIndex, nextIndex, accumulatorInSecond);
+    currentIndex = nextIndex;
+  }
+  // 2-4초: 0.2초씩 돌아가고
+  while(accumulatorInSecond < 4) {
+    nextIndex = getNextIndex(iteratingSequence, currentIndex);
+    accumulatorInSecond = accumulatorInSecond + 0.2;
+    turnOffTargetOnNext(turnOffFunc, turnOnFunc, currentIndex, nextIndex, accumulatorInSecond);
+    currentIndex = nextIndex;
+  }
+  // 4초~: 타겟 도달할 때까지 0.5초씩 돌아가고
+  while(currentIndex !== targetIndex) {
+    nextIndex = getNextIndex(iteratingSequence, currentIndex);
+    accumulatorInSecond = accumulatorInSecond + 0.5;
+    turnOffTargetOnNext(turnOffFunc, turnOnFunc, currentIndex, nextIndex, accumulatorInSecond);
+    currentIndex = nextIndex;
+  }
+}
+
+const getNextIndex = (
+  list: any[],
+  currentIndex: number,
+): number => {
+  if (list.length === currentIndex + 1) {
+    return 0;
+  } else {
+    return currentIndex + 1;
+  }
+}
+
+const turnOffTargetOnNext = (
+  turnOffFunc: any,
+  turnOnFunc: any,
+  currentIndex: number,
+  nextIndex: number,
+  seconds: number,
+) => {
+  setTimeout(() => {
+    console.log(`turnOn ${nextIndex} at ${seconds}`);
+    turnOffFunc(currentIndex);
+    turnOnFunc(nextIndex);
+  }, seconds * 1000);
+}
+
 const PosedHighlightBox = posed.div({
   light: {
-    display: 'block',
+    opacity: 1,
+    transition: { duration: 300 },
   },
   dark: {
-    display: 'none',
+    opacity: 0,
+    transition: { duration: 300 },
   }
 });
 

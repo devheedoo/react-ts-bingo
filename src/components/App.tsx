@@ -3,26 +3,9 @@
 import React, { useState, useEffect } from 'react';
 import BingoData from '../bingo-data';
 import BingoLines from '../bingo-lines';
-import posed from 'react-pose';
-import styled from 'styled-components';
 
 import BackgroundImage from '../images/background.png';
 import TitleImage from '../images/title.png';
-import BingoCount0Image from '../images/bingo_count_0.png';
-import BingoCount1Image from '../images/bingo_count_1.png';
-import BingoCount2Image from '../images/bingo_count_2.png';
-import BingoCount3Image from '../images/bingo_count_3.png';
-import BingoCount4Image from '../images/bingo_count_4.png';
-import BingoCount5Image from '../images/bingo_count_5.png';
-import BingoCount6Image from '../images/bingo_count_6.png';
-import BingoCount7Image from '../images/bingo_count_7.png';
-import BingoCount8Image from '../images/bingo_count_8.png';
-import BingoCount9Image from '../images/bingo_count_9.png';
-import BingoCountFrameImage from '../images/bingo_count_frame.png';
-import RouletteButtonImage from '../images/roulette_button.png';
-import RouletteCoverImage from '../images/roulette_cover.png';
-import RouletteFrameImage from '../images/roulette_frame.png';
-import Summon5WfwImage from '../images/summon_5_wfw.png';
 import LogoBubbleImage from '../images/logo_bubble.png';
 
 import BingoBoard from './bingo-board';
