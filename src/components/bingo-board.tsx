@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import posed from 'react-pose';
 
 import players from './Players';
@@ -20,10 +20,12 @@ const BingoBoard = (props: BingoBoardProps) => {
     <div style={{ 
       width: '500px',
       height: '500px',
-      backgroundColor: 'lightgray',
       display: 'flex',
       flexWrap: 'wrap',
       position: 'relative',
+      
+      backgroundColor: 'white',
+      backgroundImage: 'repeating-linear-gradient(45deg, rgba(201,24,24,0.8), rgba(201,24,24,0.8) 10px, rgba(17,153,24,0.8) 10px, rgba(17,153,24,0.8) 20px)',
     }}>
       {bingoData.map(bingoItem => {
         return (
@@ -84,6 +86,7 @@ const getProfileImage = (memberId: PlayerId): any => {
 
 const BingoCell = (props: BingoCellProps) => {
   const {id, memberWhoCompletes} = props.bingoItem;
+  // const [showProfileImage, setShowProfileImage] = useState('idle');
   
   const handleClick = () => {
     console.log(`handleClick`);
@@ -94,6 +97,11 @@ const BingoCell = (props: BingoCellProps) => {
     profileBackgroundColor: backgroundColor,
     profileImage: backgroundImage
   } = getProfileImage(memberWhoCompletes);
+  
+  // useEffect(() => {
+  //   console.log(backgroundImage ? 'show' : 'idle');
+  //   setShowProfileImage(backgroundImage ? 'show' : 'idle');
+  // }, [memberWhoCompletes])
 
   return (
     <div style={{
@@ -115,9 +123,8 @@ const BingoCell = (props: BingoCellProps) => {
           backgroundColor: 'white',
         }}
       />
-      <ProfileCellPosed
-        // pose={backgroundColor !== 'white' ? 'show' : 'idle'}
-        pose={'show'}
+      <div
+        // pose={showProfileImage}
         style={{
           position: 'absolute',
           width: '80px',
@@ -129,7 +136,7 @@ const BingoCell = (props: BingoCellProps) => {
           backgroundPosition: 'center',
           backgroundSize: 'cover',
           backgroundRepeat: 'no-repeat',
-          // transition: 'background-color 1s',
+          transition: 'background-color 1s',
         }}
       />
     </div>

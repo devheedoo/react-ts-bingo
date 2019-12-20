@@ -80,16 +80,6 @@ const BingoHighlight = (props: BingoHighlightProps) => {
           aniTimeAcc: 0,
         });
       }
-
-
-      // if (highlighting.id !== targetId) {
-      //   setTimeout(() => {
-      //     setHighlighting({
-      //       ...highlighting,
-      //       id: nextId
-      //     });
-      //   }, 100);
-      // }
     } else if (completedType === 'SUMMON_5_LD') {
       // 한 줄씩
     } else {
@@ -97,11 +87,6 @@ const BingoHighlight = (props: BingoHighlightProps) => {
     }
   }
 
-  
-  // setTimeout(() => setHighlightingId(highlightingId + 1), 100);
-  // const [isTimeToHighlight, setIsTimeToHighlight] = useState<boolean>(true);
-  // setInterval(() => setIsTimeToHighlight(!isTimeToHighlight), 1000)
-  // console.log(incompleteIds);
   return (
     <div style={{
       position: 'absolute',
@@ -115,8 +100,7 @@ const BingoHighlight = (props: BingoHighlightProps) => {
     }}>
       {Array(25).fill(undefined).map((item, index) => {
         const isHighlighted = incompleteIds.includes(index + 1);
-        const poseState = isHighlighted && (index + 1 === highlighting.id) ? 'light' : 'dark';
-        // console.log(poseState);
+        const poseState = completedType && isHighlighted && (index + 1 === highlighting.id) ? 'light' : 'dark';
         return (
           <div style={{
             width: '100px',
