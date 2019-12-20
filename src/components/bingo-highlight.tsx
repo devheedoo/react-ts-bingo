@@ -15,9 +15,15 @@ interface BingoHighlightProps {
 
 const BingoHighlight = (props: BingoHighlightProps) => {
   const {incompleteIds, targetId} = props;
-  const startingId = 1;
+  const startingId = incompleteIds[0];
   const [highlightingId, setHighlightingId] = useState<number>(startingId);
-  console.log(incompleteIds);
+  setTimeout(() => {
+    setHighlightingId(incompleteIds[getNextIndex(incompleteIds, incompleteIds.indexOf(highlightingId))]);
+  }, 100);
+  // setTimeout(() => setHighlightingId(highlightingId + 1), 100);
+  // const [isTimeToHighlight, setIsTimeToHighlight] = useState<boolean>(true);
+  // setInterval(() => setIsTimeToHighlight(!isTimeToHighlight), 1000)
+  // console.log(incompleteIds);
   return (
     <div style={{
       position: 'absolute',
@@ -31,8 +37,8 @@ const BingoHighlight = (props: BingoHighlightProps) => {
     }}>
       {Array(25).fill(undefined).map((item, index) => {
         const isHighlighted = incompleteIds.includes(index + 1);
-        const poseState = isHighlighted ? 'light' : 'dark';
-        console.log(poseState);
+        const poseState = isHighlighted && (index + 1 === highlightingId) ? 'light' : 'dark';
+        // console.log(poseState);
         return (
           <div style={{
             width: '100px',
@@ -46,7 +52,7 @@ const BingoHighlight = (props: BingoHighlightProps) => {
               style={{
                 width: '80px',
                 height: '80px',
-                backgroundColor: 'rgba(255,255,0,0.3)',
+                backgroundColor: 'rgba(255,255,0)',
               }}
             />
           </div>
