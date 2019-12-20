@@ -18,17 +18,78 @@ interface BingoHighlightProps {
 const BingoHighlight = (props: BingoHighlightProps) => {
   const {incompleteIds, targetId, completedType, isPopupOpen} = props;
   const startingId = incompleteIds[0];
-  const [highlightingId, setHighlightingId] = useState<number>(startingId);
+  const [highlighting, setHighlighting] = useState({
+    id: startingId,
+    aniTimeAcc: 0,
+  });
 
   if (!isPopupOpen) {
+    // - 0.05 * 20 = 1 sec
+    // - (Variable) 0.05 * 50 or 0.1 * 25 = 2.5 sec
+    // - 0.1 * 5 = 0.5 sec
+    // - 0.25 * 2 = 0.5 sec
+    // - 0.5 * 2 = 1 sec
+    // > 29 + (25 ~ 50) 
+    
+    const {cell50Count, cell100Count} = getVariableCellsCount(
+      incompleteIds.length,
+      incompleteIds.indexOf(targetId)
+    );
+
     if (completedType === 'SUMMON_5_WFW') {
       // 한 칸씩
-      const nextId = incompleteIds[getNextIndex(incompleteIds, incompleteIds.indexOf(highlightingId))]
-      if (highlightingId !== targetId) {
+      const nextId = incompleteIds[getNextIndex(incompleteIds, incompleteIds.indexOf(highlighting.id))];
+      if (highlighting.aniTimeAcc < 1000 + 50 * cell50Count) {
         setTimeout(() => {
-          setHighlightingId(nextId);
+          setHighlighting({
+            id: nextId,
+            aniTimeAcc: highlighting.aniTimeAcc + 50,
+          });
+        }, 50);
+      } else if (highlighting.aniTimeAcc < 4000) {
+        setTimeout(() => {
+          setHighlighting({
+            id: nextId,
+            aniTimeAcc: highlighting.aniTimeAcc + 100,
+          });
         }, 100);
+      } else if (highlighting.aniTimeAcc < 4500) {
+        setTimeout(() => {
+          setHighlighting({
+            id: nextId,
+            aniTimeAcc: highlighting.aniTimeAcc + 250,
+          });
+        }, 250);
+      } else if (highlighting.aniTimeAcc < 5000) {
+        setTimeout(() => {
+          setHighlighting({
+            id: nextId,
+            aniTimeAcc: highlighting.aniTimeAcc + 500,
+          });
+        }, 500);
+      } else if (highlighting.aniTimeAcc < 6000) {
+        setTimeout(() => {
+          setHighlighting({
+            id: nextId,
+            aniTimeAcc: highlighting.aniTimeAcc + 1000,
+          });
+        }, 1000);
+      } else {
+        setHighlighting({
+          id: nextId,
+          aniTimeAcc: 0,
+        });
       }
+
+
+      // if (highlighting.id !== targetId) {
+      //   setTimeout(() => {
+      //     setHighlighting({
+      //       ...highlighting,
+      //       id: nextId
+      //     });
+      //   }, 100);
+      // }
     } else if (completedType === 'SUMMON_5_LD') {
       // 한 줄씩
     } else {
@@ -54,7 +115,7 @@ const BingoHighlight = (props: BingoHighlightProps) => {
     }}>
       {Array(25).fill(undefined).map((item, index) => {
         const isHighlighted = incompleteIds.includes(index + 1);
-        const poseState = isHighlighted && (index + 1 === highlightingId) ? 'light' : 'dark';
+        const poseState = isHighlighted && (index + 1 === highlighting.id) ? 'light' : 'dark';
         // console.log(poseState);
         return (
           <div style={{
@@ -79,40 +140,6 @@ const BingoHighlight = (props: BingoHighlightProps) => {
   )
 }
 
-const callSequentially = (
-  turnOnFunc: any,
-  turnOffFunc: any,
-  iteratingSequence: any[], // bingoData.filter(bingoItem => !bingoItem.isComplete)
-  targetIndex: number,  // 1 ~ 25
-) => {
-  let accumulatorInSecond: number = 0;
-  let currentIndex: number = 0;
-  let nextIndex: number = 0;
-
-  // 0-2초: 0.1초씩 돌아가고
-  turnOnFunc(iteratingSequence[currentIndex]);
-  while(accumulatorInSecond < 2) {
-    nextIndex = getNextIndex(iteratingSequence, currentIndex);
-    accumulatorInSecond = accumulatorInSecond + 0.1;
-    turnOffTargetOnNext(turnOffFunc, turnOnFunc, currentIndex, nextIndex, accumulatorInSecond);
-    currentIndex = nextIndex;
-  }
-  // 2-4초: 0.2초씩 돌아가고
-  while(accumulatorInSecond < 4) {
-    nextIndex = getNextIndex(iteratingSequence, currentIndex);
-    accumulatorInSecond = accumulatorInSecond + 0.2;
-    turnOffTargetOnNext(turnOffFunc, turnOnFunc, currentIndex, nextIndex, accumulatorInSecond);
-    currentIndex = nextIndex;
-  }
-  // 4초~: 타겟 도달할 때까지 0.5초씩 돌아가고
-  while(currentIndex !== targetIndex) {
-    nextIndex = getNextIndex(iteratingSequence, currentIndex);
-    accumulatorInSecond = accumulatorInSecond + 0.5;
-    turnOffTargetOnNext(turnOffFunc, turnOnFunc, currentIndex, nextIndex, accumulatorInSecond);
-    currentIndex = nextIndex;
-  }
-}
-
 const getNextIndex = (
   list: any[],
   currentIndex: number,
@@ -124,18 +151,20 @@ const getNextIndex = (
   }
 }
 
-const turnOffTargetOnNext = (
-  turnOffFunc: any,
-  turnOnFunc: any,
-  currentIndex: number,
-  nextIndex: number,
-  seconds: number,
-) => {
-  setTimeout(() => {
-    console.log(`turnOn ${nextIndex} at ${seconds}`);
-    turnOffFunc(currentIndex);
-    turnOnFunc(nextIndex);
-  }, seconds * 1000);
+const getVariableCellsCount = (listLength: number, targetIndex: number) => {
+  let i = 25;
+  for (;i<50;i++) {
+    if ((29 + i - targetIndex) % listLength === 0) {
+      break;
+    }
+  }
+  // i === 49 ? cell500: 48, cell1000: 1
+  // i === 48 ? cell500: 46, cell1000: 2
+  // i === 47 ? cell500: 44, cell1000: 3
+  return {
+    cell50Count: 2 * i - 50,
+    cell100Count: 50 - i
+  };
 }
 
 const PosedHighlightBox = posed.div({

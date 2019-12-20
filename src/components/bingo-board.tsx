@@ -1,4 +1,5 @@
 import React from 'react';
+import posed from 'react-pose';
 
 import players from './Players';
 import BingoHighlight from './bingo-highlight';
@@ -101,6 +102,7 @@ const BingoCell = (props: BingoCellProps) => {
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
+      position: 'relative',
     }}
     onClick={handleClick}>
       <div
@@ -110,17 +112,41 @@ const BingoCell = (props: BingoCellProps) => {
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
+          backgroundColor: 'white',
+        }}
+      />
+      <ProfileCellPosed
+        // pose={backgroundColor !== 'white' ? 'show' : 'idle'}
+        pose={'show'}
+        style={{
+          position: 'absolute',
+          width: '80px',
+          height: '80px',
+          top: '10px',
+          left: '10px',
           backgroundColor: backgroundColor,
-          flexDirection: 'column',
-
           backgroundImage: `url(${backgroundImage})`,
           backgroundPosition: 'center',
           backgroundSize: 'cover',
           backgroundRepeat: 'no-repeat',
+          // transition: 'background-color 1s',
         }}
       />
     </div>
   );
 }
+
+const ProfileCellPosed = posed.div({
+  idle: {
+    opacity: 0,
+    scale: 0,
+    transition: { duration: 1000 }
+  },
+  show: {
+    opacity: 1,
+    sacle: 1,
+    transition: { duration: 1000 }
+  }
+})
 
 export default BingoBoard;

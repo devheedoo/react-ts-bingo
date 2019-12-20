@@ -115,7 +115,7 @@ const App = () => {
     console.log(`${memberId} / ${completeBingoItemIds} / ${bingo.completeType}`);
 
     // 여기서 시간 계산하거나 정하고
-    const animatingTime = 3000;
+    const animatingTime = 6000;
     // 그 시간 후에 setTimeout 으로 setBingo
     // 팝업만 어떻게 빨리 사라지게 해보자
     setTimeout(() => {
@@ -220,10 +220,6 @@ const App = () => {
 const getRandomIncompleteBingoItemId = (bingoList: BingoItem[]): number => {
   const incompleteBingoList = bingoList.filter(bingo => !bingo.isComplete);
   const nextIndex = Math.floor(Math.random() * (incompleteBingoList.length));
-  // 20, 0.1
-  // 10, 0.2
-  // 3, 0.5
-  // 1, 멈춰
   const incompleteBingoItem = incompleteBingoList[nextIndex];
   return incompleteBingoItem ? incompleteBingoItem.id : -1;
 }
