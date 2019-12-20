@@ -208,7 +208,7 @@ const App = () => {
 
   useEffect(() => {
     console.log('RENDER!');
-    callSequentially(turnOn, turnOff, bingo.bingoData, 21);
+    // callSequentially(turnOn, turnOff, bingo.bingoData, 21);
   });
 
   return (

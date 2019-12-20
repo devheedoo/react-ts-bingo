@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+
 import players from './Players';
+import BingoHighlight from './bingo-highlight';
 
 const COLOR_WATER = 'rgba(0, 0, 255, 0.7)';
 const COLOR_FIRE = 'rgba(255, 0, 0, 0.7)';
 const COLOR_WIND = 'rgba(255, 200, 0, 0.7)';
 const COLOR_LIGHT = 'rgba(255, 255, 255, 0.7)';
 const COLOR_DARK = 'rgba(100, 0, 200, 0.7)';
-
 
 const BingoBoard = (props: BingoProps) => {
   const {bingoData} = props;
@@ -17,6 +18,7 @@ const BingoBoard = (props: BingoProps) => {
       backgroundColor: 'lightgray',
       display: 'flex',
       flexWrap: 'wrap',
+      position: 'relative',
     }}>
       {bingoData.map(bingoItem => {
         return (
@@ -27,6 +29,7 @@ const BingoBoard = (props: BingoProps) => {
           />
         );
       })}
+      <BingoHighlight />
     </div>
   );
 }
@@ -70,7 +73,7 @@ const getProfileImage = (memberId: PlayerId): any => {
 }
 
 const BingoCell = (props: BingoCellProps) => {
-  const {id, isComplete, isBingo, memberWhoCompletes} = props.bingoItem;
+  const {id, memberWhoCompletes} = props.bingoItem;
   
   const handleClick = () => {
     console.log(`handleClick`);
@@ -106,8 +109,7 @@ const BingoCell = (props: BingoCellProps) => {
           backgroundSize: 'cover',
           backgroundRepeat: 'no-repeat',
         }}
-      >
-      </div>
+      />
     </div>
   );
 }
