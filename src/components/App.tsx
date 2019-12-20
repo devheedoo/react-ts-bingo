@@ -66,12 +66,6 @@ const App = () => {
 
   const handleClickPopupSelectMember = (memberId: PlayerId) => {
     const {completeType} = bingo;
-    if (completeType && completeType === 'SUMMON_5_WFW') {
-      // Random Cell Animation
-      // input: seconds list, rotating bingo cell list, target bingo cell id
-
-    }
-
     let newBingoData: BingoItem[] = bingo.bingoData;
     let completeBingoItemIds: number[] = [];
     if (completeType && completeType === 'SUMMON_5_LD') {
@@ -115,7 +109,7 @@ const App = () => {
     console.log(`${memberId} / ${completeBingoItemIds} / ${bingo.completeType}`);
 
     // 여기서 시간 계산하거나 정하고
-    const animatingTime = 6000;
+    const animatingTime = completeType === 'MISSION_CLEAR' ? 100 : 6000;
     // 그 시간 후에 setTimeout 으로 setBingo
     // 팝업만 어떻게 빨리 사라지게 해보자
     setTimeout(() => {
@@ -167,7 +161,7 @@ const App = () => {
           height: '550px',
           // backgroundColor: 'gray',
           boxSizing: 'border-box',
-          padding: '25px',
+          padding: '20px',
           position: 'relative',
         }}>
           <BingoBoard

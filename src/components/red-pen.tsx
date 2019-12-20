@@ -56,16 +56,12 @@ const RedPen = (props: RedPenProps) => {
 const RedLinePosed = posed.div({
   visible: {
     opacity: 1,
-    // width: ({ isDiagonal, isColumn }) => (isDiagonal ? BINGO_LINE_LENGTH_DIAGONAL : (!isColumn ? BINGO_LINE_LENGTH : BINGO_LINE_THICKNESS)) + 'px',
-    // height: ({ isDiagonal, isColumn }) => (isColumn && !isDiagonal ? BINGO_LINE_LENGTH : BINGO_LINE_THICKNESS) + 'px',
     transition: {
       default: { ease: 'easeInOut', duration: 300 }
     }
   },
   invisible: {
     opacity: 0,
-    // width: 0,
-    // height: 0,
     transition: {
       default: { ease: 'easeInOut', duration: 300 }
     }
@@ -79,7 +75,7 @@ const StyledRedLinePosed = styled(RedLinePosed)<RedLineProps>`
   top: ${props => props.isDiagonal ? 240 : (!props.isColumn ? props.top + 40 : 0)}px;
   left: ${props => props.isDiagonal ? -250 : (props.isColumn ? props.top + 40 : 0)}px;
   transform: ${props => props.isDiagonal ? (props.isColumn ? 'rotate(-45deg)' : 'rotate(45deg)') : ''};
-  background-color: rgba(255,0,0,0.3);
+  background-color: rgba(255,255,0,0.7);
 `;
 
 export default RedPen;

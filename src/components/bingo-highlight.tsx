@@ -98,21 +98,23 @@ const BingoHighlight = (props: BingoHighlightProps) => {
     }}>
       {Array(25).fill(undefined).map((item, index) => {
         const isHighlighted = incompleteIds.includes(index + 1);
-        const poseState = completedType && isHighlighted && (index + 1 === highlighting.id) ? 'light' : 'dark';
+        const poseState = !isPopupOpen && completedType && completedType !== 'MISSION_CLEAR' &&
+          isHighlighted && (index + 1 === highlighting.id) ? 'light' : 'dark';
         return (
           <div style={{
             width: '100px',
             height: '100px',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
+            position: 'relative'
           }}>
             <PosedHighlightBox
               pose={poseState}
               style={{
-                width: '80px',
-                height: '80px',
-                backgroundColor: 'rgba(255,255,0)',
+                position: 'absolute',
+                width: '90px',
+                height: '90px',
+                top: '10px',
+                left: '10px',
+                backgroundColor: 'rgba(255,255,0,0.7)',
               }}
             />
           </div>
@@ -152,11 +154,11 @@ const getVariableCellsCount = (listLength: number, targetIndex: number) => {
 const PosedHighlightBox = posed.div({
   light: {
     opacity: 1,
-    transition: { duration: 100 },
+    transition: { duration: 50 },
   },
   dark: {
     opacity: 0,
-    transition: { duration: 100 },
+    transition: { duration: 50 },
   }
 });
 
