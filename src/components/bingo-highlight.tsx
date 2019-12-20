@@ -11,15 +11,29 @@ import posed from 'react-pose';
 interface BingoHighlightProps {
   incompleteIds: number[];
   targetId: number;
+  completedType: CompleteType;
 }
 
 const BingoHighlight = (props: BingoHighlightProps) => {
-  const {incompleteIds, targetId} = props;
+  const {incompleteIds, targetId, completedType} = props;
   const startingId = incompleteIds[0];
   const [highlightingId, setHighlightingId] = useState<number>(startingId);
-  setTimeout(() => {
-    setHighlightingId(incompleteIds[getNextIndex(incompleteIds, incompleteIds.indexOf(highlightingId))]);
-  }, 100);
+
+  if (completedType === 'SUMMON_5_WFW') {
+    // 한 칸씩
+    const nextId = incompleteIds[getNextIndex(incompleteIds, incompleteIds.indexOf(highlightingId))]
+    if (highlightingId !== targetId) {
+      setTimeout(() => {
+        setHighlightingId(nextId);
+      }, 100);
+    }
+  } else if (completedType === 'SUMMON_5_LD') {
+    // 한 줄씩
+  } else {
+    // dark
+  }
+
+  
   // setTimeout(() => setHighlightingId(highlightingId + 1), 100);
   // const [isTimeToHighlight, setIsTimeToHighlight] = useState<boolean>(true);
   // setInterval(() => setIsTimeToHighlight(!isTimeToHighlight), 1000)

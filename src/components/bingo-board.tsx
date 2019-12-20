@@ -9,8 +9,8 @@ const COLOR_WIND = 'rgba(255, 200, 0, 0.7)';
 const COLOR_LIGHT = 'rgba(255, 255, 255, 0.7)';
 const COLOR_DARK = 'rgba(100, 0, 200, 0.7)';
 
-const BingoBoard = (props: BingoProps) => {
-  const {bingoData} = props;
+const BingoBoard = (props: BingoBoardProps) => {
+  const {bingoData, clickedBingoItemId, completeType} = props;
   const incompleteIds = bingoData
     .filter(bingoItem => !bingoItem.isComplete)
     .map(bingoItem => bingoItem.id);
@@ -35,7 +35,8 @@ const BingoBoard = (props: BingoProps) => {
       })}
       <BingoHighlight
         incompleteIds={incompleteIds}
-        targetId={13}
+        targetId={clickedBingoItemId}
+        completedType={completeType}
       />
     </div>
   );

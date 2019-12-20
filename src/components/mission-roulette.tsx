@@ -31,7 +31,7 @@ const MissionRoulette = () => {
   } as React.CSSProperties;
 // 22 -8 -38 
 
-  useEffect(() => console.log(`Render MissionRoulette`));
+  // useEffect(() => console.log(`Render MissionRoulette`));
 
   return (
     <div style={{

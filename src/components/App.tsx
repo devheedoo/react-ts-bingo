@@ -91,8 +91,8 @@ const App = () => {
     bingoCount: 0,
     clickedBingoItemId: 0,
     completeType: undefined,
+    history: [],
   });
-  const [history, setHistory] = useState([]);
 
   const handleClickSummon5WfwButton = () => {
     const randomBingoItemId: number = getRandomIncompleteBingoItemId(bingo.bingoData);
@@ -137,6 +137,7 @@ const App = () => {
     }
 
     let newBingoData: BingoItem[] = bingo.bingoData;
+    let completeBingoItemIds: number[] = [];
     if (completeType && completeType === 'SUMMON_5_LD') {
       // Random Line Animation
       const cellId = bingo.clickedBingoItemId;
@@ -148,6 +149,7 @@ const App = () => {
           randomBingoLineCellIds.includes(bingoItem.id) &&
           !bingoItem.isComplete
         ) {
+          completeBingoItemIds.push(bingoItem.id);
           return { ...bingoItem, isComplete: true, memberWhoCompletes: memberId };
         } else {
           return bingoItem;
@@ -155,22 +157,41 @@ const App = () => {
       })
     } else {
       newBingoData = bingo.bingoData.map(bingoItem => {
-        return bingoItem.id === bingo.clickedBingoItemId
-          ? { ...bingoItem, isComplete: true, memberWhoCompletes: memberId }
-          : bingoItem;
+        if (bingoItem.id === bingo.clickedBingoItemId) {
+          completeBingoItemIds.push(bingoItem.id);
+          return { ...bingoItem, isComplete: true, memberWhoCompletes: memberId }
+        } else {
+          return bingoItem;
+        }
       });
     }
 
     const newBingoLines = checkBingoLines(newBingoData, bingo.bingoLines);
     const newBingoCount = newBingoLines.filter(bingoLine => bingoLine.isBingo).length;
     
-    setBingo({
-      bingoData: newBingoData,
-      bingoLines: newBingoLines,
-      bingoCount: newBingoCount,
-      clickedBingoItemId: 0,
-      completeType: undefined,
+    const history = bingo.history.slice();
+    history.push({
+      completeBingoItemIds: completeBingoItemIds,
+      completeMemberId: memberId,
+      completeType: bingo.completeType,
     });
+
+    console.log(`${memberId} / ${completeBingoItemIds} / ${bingo.completeType}`);
+
+    // 여기서 시간 계산하거나 정하고
+    const animatingTime = 3000;
+    // 그 시간 후에 setTimeout 으로 setBingo
+    // 팝업만 어떻게 빨리 사라지게 해보자
+    setTimeout(() => {
+      setBingo({
+        bingoData: newBingoData,
+        bingoLines: newBingoLines,
+        bingoCount: newBingoCount,
+        clickedBingoItemId: 0,
+        completeType: undefined,
+        history: history,
+      });
+    }, animatingTime);
   }
 
   const handleClickPopupSelectMemberDimDiv = () => {
@@ -190,7 +211,10 @@ const App = () => {
   }
 
   useEffect(() => {
-    console.log('RENDER!');
+    // const recentHistory = bingo.history[bingo.history.length - 1];
+    // if (recentHistory) {
+    //   console.log(`${recentHistory.completeMemberId} / ${recentHistory.completeBingoItemIds} / ${recentHistory.completeType}`);
+    // }
     // callSequentially(turnOn, turnOff, bingo.bingoData, 21);
   });
 
@@ -219,7 +243,9 @@ const App = () => {
         }}>
           <BingoBoard
             bingoData={bingo.bingoData}
+            clickedBingoItemId={bingo.clickedBingoItemId}
             onClickCell={handleClickBingoCell}
+            completeType={bingo.completeType}
           />
           <RedPen
             checkedLines={bingo.bingoLines.filter(bingoLine => bingoLine.isBingo).map(bingoLine => bingoLine.id)}

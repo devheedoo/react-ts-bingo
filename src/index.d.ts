@@ -4,10 +4,13 @@ interface AppState {
   bingoCount: number;
   clickedBingoItemId: number;
   completeType?: CompleteType;
+  history?: any[];
 }
 
-interface BingoProps {
+interface BingoBoardProps {
   bingoData: BingoItem[];
+  clickedBingoItemId: number;
+  completeType?: CompleteType;
   onClickCell: (id: number) => void;
 }
 
