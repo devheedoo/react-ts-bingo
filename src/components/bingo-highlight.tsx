@@ -12,25 +12,28 @@ interface BingoHighlightProps {
   incompleteIds: number[];
   targetId: number;
   completedType: CompleteType;
+  isPopupOpen: boolean;
 }
 
 const BingoHighlight = (props: BingoHighlightProps) => {
-  const {incompleteIds, targetId, completedType} = props;
+  const {incompleteIds, targetId, completedType, isPopupOpen} = props;
   const startingId = incompleteIds[0];
   const [highlightingId, setHighlightingId] = useState<number>(startingId);
 
-  if (completedType === 'SUMMON_5_WFW') {
-    // 한 칸씩
-    const nextId = incompleteIds[getNextIndex(incompleteIds, incompleteIds.indexOf(highlightingId))]
-    if (highlightingId !== targetId) {
-      setTimeout(() => {
-        setHighlightingId(nextId);
-      }, 100);
+  if (!isPopupOpen) {
+    if (completedType === 'SUMMON_5_WFW') {
+      // 한 칸씩
+      const nextId = incompleteIds[getNextIndex(incompleteIds, incompleteIds.indexOf(highlightingId))]
+      if (highlightingId !== targetId) {
+        setTimeout(() => {
+          setHighlightingId(nextId);
+        }, 100);
+      }
+    } else if (completedType === 'SUMMON_5_LD') {
+      // 한 줄씩
+    } else {
+      // dark
     }
-  } else if (completedType === 'SUMMON_5_LD') {
-    // 한 줄씩
-  } else {
-    // dark
   }
 
   
@@ -138,11 +141,11 @@ const turnOffTargetOnNext = (
 const PosedHighlightBox = posed.div({
   light: {
     opacity: 1,
-    transition: { duration: 300 },
+    transition: { duration: 100 },
   },
   dark: {
     opacity: 0,
-    transition: { duration: 300 },
+    transition: { duration: 100 },
   }
 });
 

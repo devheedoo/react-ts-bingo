@@ -13,6 +13,7 @@ interface BingoBoardProps {
   clickedBingoItemId: number;
   completeType?: CompleteType;
   onClickCell: (id: number) => void;
+  isPopupOpen: boolean;
 }
 
 interface BingoItem {

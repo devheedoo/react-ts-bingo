@@ -9,7 +9,6 @@ import TitleImage from '../images/title.png';
 import LogoBubbleImage from '../images/logo_bubble.png';
 
 import BingoBoard from './bingo-board';
-import Mission from './mission';
 import RedPen from './red-pen';
 import BingoCountBoard from './bingo-count-board';
 import Summon5LdButton from './summon-5-ld';
@@ -148,18 +147,6 @@ const App = () => {
     });
   }
 
-  const turnOnBingoCell = (id: number) => {
-    
-  }
-
-  useEffect(() => {
-    // const recentHistory = bingo.history[bingo.history.length - 1];
-    // if (recentHistory) {
-    //   console.log(`${recentHistory.completeMemberId} / ${recentHistory.completeBingoItemIds} / ${recentHistory.completeType}`);
-    // }
-    // callSequentially(turnOn, turnOff, bingo.bingoData, 21);
-  });
-
   return (
     <div style={{
       width: '1240px',
@@ -188,6 +175,7 @@ const App = () => {
             clickedBingoItemId={bingo.clickedBingoItemId}
             onClickCell={handleClickBingoCell}
             completeType={bingo.completeType}
+            isPopupOpen={bingo.isPopupOpen}
           />
           <RedPen
             checkedLines={bingo.bingoLines.filter(bingoLine => bingoLine.isBingo).map(bingoLine => bingoLine.id)}
@@ -229,23 +217,6 @@ const App = () => {
   );
 };
 
-const BingoStatus = (props: BingoStatusProps) => {
-  const {bingoCount} = props;
-  return (
-    <div>
-      BINGO LINE: {bingoCount}
-    </div>
-  );
-}
-
-const RouletteButton = (props:RouletteButtonProps) => {
-  return (
-    <div>
-      <button onClick={props.onClick}>각성 5성</button>
-    </div>
-  );
-}
-
 const getRandomIncompleteBingoItemId = (bingoList: BingoItem[]): number => {
   const incompleteBingoList = bingoList.filter(bingo => !bingo.isComplete);
   const nextIndex = Math.floor(Math.random() * (incompleteBingoList.length));
@@ -271,73 +242,6 @@ const checkBingoLines = (bingoList: BingoItem[], bingoLines: BingoLine[]): Bingo
     return canDrawLine ? { ...bingoLine, isBingo: true } : bingoLine;
   })
   return newBingoLines;
-}
-
-const turnOffTargetOnNext = (
-  turnOffFunc: any,
-  turnOnFunc: any,
-  currentIndex: number,
-  nextIndex: number,
-  seconds: number,
-) => {
-  setTimeout(() => {
-    console.log(`turnOn ${nextIndex} at ${seconds}`);
-    turnOffFunc(currentIndex);
-    turnOnFunc(nextIndex);
-  }, seconds * 1000);
-}
-
-const turnOn = (index: number) => {
-  console.log(`turnOn:${index}`);
-}
-
-const turnOff = (index: number) => {
-  console.log(`turnOff:${index}`);
-}
-
-const getNextIndex = (
-  list: any[],
-  currentIndex: number,
-): number => {
-  if (list.length === currentIndex + 1) {
-    return 0;
-  } else {
-    return currentIndex + 1;
-  }
-}
-
-const callSequentially = (
-  turnOnFunc: any,
-  turnOffFunc: any,
-  iteratingSequence: any[],
-  targetIndex: number,
-) => {
-  let accumulatorInSecond: number = 0;
-  let currentIndex: number = 0;
-  let nextIndex: number = 0;
-
-  // 0-2초: 0.1초씩 돌아가고
-  turnOnFunc(iteratingSequence[currentIndex]);
-  while(accumulatorInSecond < 2) {
-    nextIndex = getNextIndex(iteratingSequence, currentIndex);
-    accumulatorInSecond = accumulatorInSecond + 0.1;
-    turnOffTargetOnNext(turnOffFunc, turnOnFunc, currentIndex, nextIndex, accumulatorInSecond);
-    currentIndex = nextIndex;
-  }
-  // 2-4초: 0.2초씩 돌아가고
-  while(accumulatorInSecond < 4) {
-    nextIndex = getNextIndex(iteratingSequence, currentIndex);
-    accumulatorInSecond = accumulatorInSecond + 0.2;
-    turnOffTargetOnNext(turnOffFunc, turnOnFunc, currentIndex, nextIndex, accumulatorInSecond);
-    currentIndex = nextIndex;
-  }
-  // 4초~: 타겟 도달할 때까지 0.5초씩 돌아가고
-  while(currentIndex !== targetIndex) {
-    nextIndex = getNextIndex(iteratingSequence, currentIndex);
-    accumulatorInSecond = accumulatorInSecond + 0.5;
-    turnOffTargetOnNext(turnOffFunc, turnOnFunc, currentIndex, nextIndex, accumulatorInSecond);
-    currentIndex = nextIndex;
-  }
 }
 
 export default App;
