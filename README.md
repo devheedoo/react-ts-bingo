@@ -1,6 +1,6 @@
 # react-ts-bingo
 
-Make bingo game with React + TypeScript!
+Make bingo game with React Hooks + TypeScript!
 
 ## version 1.1
 
