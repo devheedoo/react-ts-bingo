@@ -4,7 +4,6 @@ import posed from 'react-pose';
 import players from './players';
 
 interface PopupSelectMemberProps {
-  // playerId: string;
   onClickPlayer: (memberId: PlayerId) => void;
   onClickDimDiv: () => void;
   isPopupOpen: boolean;
@@ -92,11 +91,6 @@ const PopupSelectMember = (props: PopupSelectMemberProps) => {
     </div>
   );
 }
-
-const posedPopup = posed.div({
-  show: {},
-  hidden: {},
-});
 
 const PosedButton = posed.div({
   hoverable: true,
