@@ -1,6 +1,6 @@
 import React from 'react';
 
-import players from './Players';
+import players from './players';
 import BingoHighlight from './bingo-highlight';
 
 const COLOR_WATER = 'rgba(0, 0, 255, 0.9)';

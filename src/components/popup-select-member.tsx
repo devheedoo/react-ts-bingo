@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import posed from 'react-pose';
 
-import players from './Players';
+import players from './players';
 
 interface PopupSelectMemberProps {
   // playerId: string;
