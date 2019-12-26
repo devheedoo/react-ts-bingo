@@ -23,7 +23,6 @@ const redLineList: RedLineProps[] = [
 
 const RedPen = (props: RedPenProps) => {
   const {checkedLines} = props;
-  // console.log(checkedLines);
   return (
     <div
       style={{

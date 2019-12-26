@@ -27,6 +27,7 @@ const App = () => {
     history: [],
   });
 
+  // click handlers
   const handleClickSummon5WfwButton = () => {
     const randomBingoItemId: number = getRandomIncompleteBingoItemId(bingo.bingoData);
     if (randomBingoItemId === -1) {
@@ -65,36 +66,11 @@ const App = () => {
   }
 
   const handleClickPopupSelectMember = (memberId: PlayerId) => {
-    const {completeType} = bingo;
-    let newBingoData: BingoItem[] = bingo.bingoData;
-    let completeBingoItemIds: number[] = [];
-    if (completeType && completeType === 'SUMMON_5_LD') {
-      // Random Line Animation
-      const cellId = bingo.clickedBingoItemId;
-      const randomBingoLines = BingoLines.filter(bingoLine => bingoLine.indexes.includes(cellId));
-      const randomIndex = Math.floor(Math.random() * randomBingoLines.length);
-      const randomBingoLineCellIds = randomBingoLines[randomIndex].indexes;
-      newBingoData = bingo.bingoData.map(bingoItem => {
-        if (
-          randomBingoLineCellIds.includes(bingoItem.id) &&
-          !bingoItem.isComplete
-        ) {
-          completeBingoItemIds.push(bingoItem.id);
-          return { ...bingoItem, isComplete: true, memberWhoCompletes: memberId };
-        } else {
-          return bingoItem;
-        }
-      })
-    } else {
-      newBingoData = bingo.bingoData.map(bingoItem => {
-        if (bingoItem.id === bingo.clickedBingoItemId) {
-          completeBingoItemIds.push(bingoItem.id);
-          return { ...bingoItem, isComplete: true, memberWhoCompletes: memberId }
-        } else {
-          return bingoItem;
-        }
-      });
-    }
+    const {bingoData, clickedBingoItemId, completeType} = bingo;
+    const {
+      newBingoData,
+      completeBingoItemIds,
+    } = getBingoDataAndIdsAfterComplete(memberId, completeType, bingoData, clickedBingoItemId);
 
     const newBingoLines = checkBingoLines(newBingoData, bingo.bingoLines);
     const newBingoCount = newBingoLines.filter(bingoLine => bingoLine.isBingo).length;
@@ -105,8 +81,6 @@ const App = () => {
       completeMemberId: memberId,
       completeType: bingo.completeType,
     });
-
-    // console.log(`${memberId} / ${completeBingoItemIds} / ${bingo.completeType}`);
 
     const animatingTime = completeType === 'MISSION_CLEAR' ? 100 : 6000;
     setTimeout(() => {
@@ -143,6 +117,7 @@ const App = () => {
     });
   }
 
+  // render
   return (
     <div style={{
       width: '1240px',
@@ -161,7 +136,6 @@ const App = () => {
         <div style={{
           width: '550px',
           height: '550px',
-          // backgroundColor: 'gray',
           boxSizing: 'border-box',
           padding: '20px',
           position: 'relative',
@@ -180,7 +154,6 @@ const App = () => {
         <div style={{
           width: '550px',
           height: '550px',
-          // backgroundColor: 'darkgray',
           boxSizing: 'border-box',
           padding: '25px',
           display: 'flex',
@@ -189,7 +162,6 @@ const App = () => {
           <div style={{
             width: '200px',
             height: '500px',
-            // backgroundColor: 'lightblue',
           }}>
             <BingoCountBoard bingoCount={bingo.bingoCount} />
             <Summon5LdButton onSummon={handleClickSummon5LdButton} />
@@ -198,7 +170,6 @@ const App = () => {
           <div style={{
             width: '300px',
             height: '500px',
-            // backgroundColor: 'lightgreen',
           }}>
             <MissionRoulette />
           </div>
@@ -213,6 +184,7 @@ const App = () => {
   );
 };
 
+// 랜덤 빙고 칸 ID 얻기
 const getRandomIncompleteBingoItemId = (bingoList: BingoItem[]): number => {
   const incompleteBingoList = bingoList.filter(bingo => !bingo.isComplete);
   const nextIndex = Math.floor(Math.random() * (incompleteBingoList.length));
@@ -234,6 +206,46 @@ const checkBingoLines = (bingoList: BingoItem[], bingoLines: BingoLine[]): Bingo
     return canDrawLine ? { ...bingoLine, isBingo: true } : bingoLine;
   })
   return newBingoLines;
+}
+
+// 한 줄 또는 한 칸 완성하기
+const getBingoDataAndIdsAfterComplete = (
+  memberId: PlayerId,
+  completeType: CompleteType,
+  bingoData: BingoItem[],
+  clickedBingoItemId: number,
+) => {
+  let newBingoData: BingoItem[] = bingoData;
+  let completeBingoItemIds: number[] = [];
+  if (completeType && completeType === 'SUMMON_5_LD') {
+    // Complete 1 line
+    const cellId = clickedBingoItemId;
+    const randomBingoLines = BingoLines.filter(bingoLine => bingoLine.indexes.includes(cellId));
+    const randomIndex = Math.floor(Math.random() * randomBingoLines.length);
+    const randomBingoLineCellIds = randomBingoLines[randomIndex].indexes;
+    newBingoData = bingoData.map(bingoItem => {
+      if (
+        randomBingoLineCellIds.includes(bingoItem.id) &&
+        !bingoItem.isComplete
+      ) {
+        completeBingoItemIds.push(bingoItem.id);
+        return { ...bingoItem, isComplete: true, memberWhoCompletes: memberId };
+      } else {
+        return bingoItem;
+      }
+    })
+  } else {
+    // Complete 1 cell
+    newBingoData = bingoData.map(bingoItem => {
+      if (bingoItem.id === clickedBingoItemId) {
+        completeBingoItemIds.push(bingoItem.id);
+        return { ...bingoItem, isComplete: true, memberWhoCompletes: memberId }
+      } else {
+        return bingoItem;
+      }
+    });
+  }
+  return { newBingoData, completeBingoItemIds };
 }
 
 export default App;

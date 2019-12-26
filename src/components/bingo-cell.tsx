@@ -13,7 +13,6 @@ const BingoCell = (props: BingoCellProps) => {
   const {id, memberWhoCompletes} = props.bingoItem;
   
   const handleClick = () => {
-    console.log(`handleClick`);
     props.onClick(id);
   }
   

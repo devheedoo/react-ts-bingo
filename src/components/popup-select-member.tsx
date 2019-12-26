@@ -29,7 +29,6 @@ const PopupSelectMember = (props: PopupSelectMemberProps) => {
   }
 
   const handleClickDimDev = () => {
-    console.log('CLICK: dim div');
     setShowPopup(false);
     props.onClickDimDiv();
   }
